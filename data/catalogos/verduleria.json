@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "categoria": "verduleria",
+  "productos": [
+    {
+      "id": "papa",
+      "nombre": "Papa",
+      "unidad": "kg"
+    },
+    {
+      "id": "tomate",
+      "nombre": "Tomate",
+      "unidad": "kg"
+    },
+    {
+      "id": "cebolla",
+      "nombre": "Cebolla",
+      "unidad": "kg"
+    },
+    {
+      "id": "zanahoria",
+      "nombre": "Zanahoria",
+      "unidad": "kg"
+    },
+    {
+      "id": "lechuga",
+      "nombre": "Lechuga",
+      "unidad": "un."
+    },
+    {
+      "id": "manzana",
+      "nombre": "Manzana",
+      "unidad": "kg"
+    },
+    {
+      "id": "banana",
+      "nombre": "Banana",
+      "unidad": "kg"
+    },
+    {
+      "id": "naranja",
+      "nombre": "Naranja",
+      "unidad": "kg"
+    }
+  ]
+}

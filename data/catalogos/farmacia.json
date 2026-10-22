@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "categoria": "farmacia",
+  "productos": [
+    {
+      "id": "algodon",
+      "nombre": "Algodón",
+      "unidad": "paq."
+    },
+    {
+      "id": "gasas",
+      "nombre": "Gasas",
+      "unidad": "paq."
+    },
+    {
+      "id": "alcohol",
+      "nombre": "Alcohol",
+      "unidad": "l"
+    },
+    {
+      "id": "curitas",
+      "nombre": "Curitas",
+      "unidad": "paq."
+    },
+    {
+      "id": "jabon",
+      "nombre": "Jabón",
+      "unidad": "un."
+    }
+  ]
+}

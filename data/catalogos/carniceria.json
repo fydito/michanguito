@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "categoria": "carniceria",
+  "productos": [
+    {
+      "id": "carne-picada",
+      "nombre": "Carne picada",
+      "unidad": "kg"
+    },
+    {
+      "id": "asado",
+      "nombre": "Asado",
+      "unidad": "kg"
+    },
+    {
+      "id": "pollo",
+      "nombre": "Pollo",
+      "unidad": "kg"
+    },
+    {
+      "id": "milanesas",
+      "nombre": "Milanesas",
+      "unidad": "kg"
+    },
+    {
+      "id": "chorizo",
+      "nombre": "Chorizo",
+      "unidad": "kg"
+    },
+    {
+      "id": "bife",
+      "nombre": "Bife",
+      "unidad": "kg"
+    }
+  ]
+}

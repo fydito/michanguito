@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "categoria": "limpieza",
+  "productos": [
+    {
+      "id": "detergente",
+      "nombre": "Detergente",
+      "unidad": "un."
+    },
+    {
+      "id": "lavandina",
+      "nombre": "Lavandina",
+      "unidad": "l"
+    },
+    {
+      "id": "jabon-en-polvo",
+      "nombre": "Jabón en polvo",
+      "unidad": "kg"
+    },
+    {
+      "id": "esponja",
+      "nombre": "Esponja",
+      "unidad": "un."
+    },
+    {
+      "id": "bolsas-de-residuos",
+      "nombre": "Bolsas de residuos",
+      "unidad": "paq."
+    }
+  ]
+}

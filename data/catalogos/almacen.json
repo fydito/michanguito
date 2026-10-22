@@ -1,1 +1,56 @@
-
+{
+  "version": 1,
+  "categoria": "almacen",
+  "productos": [
+    {
+      "id": "leche",
+      "nombre": "Leche",
+      "unidad": "l"
+    },
+    {
+      "id": "arroz",
+      "nombre": "Arroz",
+      "unidad": "kg"
+    },
+    {
+      "id": "fideos",
+      "nombre": "Fideos",
+      "unidad": "paq."
+    },
+    {
+      "id": "yerba",
+      "nombre": "Yerba",
+      "unidad": "kg"
+    },
+    {
+      "id": "aceite",
+      "nombre": "Aceite",
+      "unidad": "l"
+    },
+    {
+      "id": "azucar",
+      "nombre": "Azúcar",
+      "unidad": "kg"
+    },
+    {
+      "id": "harina",
+      "nombre": "Harina",
+      "unidad": "kg"
+    },
+    {
+      "id": "pan",
+      "nombre": "Pan",
+      "unidad": "kg"
+    },
+    {
+      "id": "cafe",
+      "nombre": "Café",
+      "unidad": "paq."
+    },
+    {
+      "id": "galletitas",
+      "nombre": "Galletitas",
+      "unidad": "paq."
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "categoria": "libreria",
+  "productos": [
+    {
+      "id": "cuaderno",
+      "nombre": "Cuaderno",
+      "unidad": "un."
+    },
+    {
+      "id": "lapiz",
+      "nombre": "Lápiz",
+      "unidad": "un."
+    },
+    {
+      "id": "lapicera",
+      "nombre": "Lapicera",
+      "unidad": "un."
+    },
+    {
+      "id": "resma-a4",
+      "nombre": "Resma A4",
+      "unidad": "un."
+    },
+    {
+      "id": "goma",
+      "nombre": "Goma",
+      "unidad": "un."
+    },
+    {
+      "id": "carpeta",
+      "nombre": "Carpeta",
+      "unidad": "un."
+    }
+  ]
+}
