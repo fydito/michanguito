@@ -39,3 +39,11 @@ La modalidad compartida, login, sincronización y API PHP/MySQL **no están impl
 ## Convenciones
 
 Archivos separados por responsabilidad, encabezados descriptivos, funciones documentadas y código legible. Nunca publicar credenciales del backend en GitHub Pages.
+
+
+## Versión 0.1.1
+- Configuración en engranaje de cabecera.
+- Navegación de listas compacta en celulares.
+- Diagnóstico de errores de carga de catálogos visible en pantalla.
+- Importante: subir **todas** las carpetas `js/` y `data/` al repositorio, no solo `index.html`.
+- Si el navegador mantiene una versión anterior, recargar la página con Ctrl+F5.
