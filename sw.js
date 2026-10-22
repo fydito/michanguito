@@ -1,9 +1,9 @@
 /*
  * Proyecto: Mi Changuito | Archivo: sw.js
- * Autor: Jordan Molinari | Versión: 0.1.0 | Fecha: 22/10/2026
+ * Autor: Jordan Molinari | Versión: 0.1.2 | Fecha: 22/10/2026
  * Descripción: Caché offline de recursos estáticos de la PWA.
  */
-const CACHE='mi-changuito-v0.1.1';
+const CACHE='mi-changuito-v0.1.2';
 const ARCHIVOS=['./','./index.html','./css/styles.css','./js/app.js','./js/storage.js','./js/catalogos.js','./js/listas.js','./js/archivos.js','./manifest.json','./img/icon.svg','./data/categorias.json',...['almacen','verduleria','carniceria','libreria','farmacia','limpieza'].map(c=>`./data/catalogos/${c}.json`)];
 self.addEventListener('install',evento=>evento.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ARCHIVOS)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',evento=>evento.waitUntil(caches.keys().then(claves=>Promise.all(claves.filter(c=>c!==CACHE).map(c=>caches.delete(c)))).then(()=>self.clients.claim())));

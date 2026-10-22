@@ -47,3 +47,9 @@ Archivos separados por responsabilidad, encabezados descriptivos, funciones docu
 - Diagnóstico de errores de carga de catálogos visible en pantalla.
 - Importante: subir **todas** las carpetas `js/` y `data/` al repositorio, no solo `index.html`.
 - Si el navegador mantiene una versión anterior, recargar la página con Ctrl+F5.
+
+
+## v0.1.2
+- Pantalla de inicio con listas; editor independiente y navegación Volver.
+- Configuración accesible únicamente desde el engranaje superior.
+- Se actualizó el identificador de caché para evitar mostrar versiones anteriores.
