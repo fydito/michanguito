@@ -1,6 +1,6 @@
 /**
  * Proyecto: Mi Changuito | Archivo: app.js
- * Autor: Jordan Molinari | Versión: 0.1.0 | Fecha: 22/10/2026
+ * Autor: Jordan Molinari | Versión: 0.1.1 | Fecha: 22/10/2026
  * Descripción: Controlador principal de la interfaz y eventos del modo local.
  */
 import { obtenerTodos, guardar, eliminar } from './storage.js';
@@ -99,6 +99,8 @@ async function importarListas(datos) {
 }
 /** Asocia los eventos de edición, importación y exportación. */
 function configurarEventos() {
+  $('abrir-config').addEventListener('click', () => $('panel-config').showModal());
+  $('cerrar-config').addEventListener('click', () => $('panel-config').close());
   $('nueva-lista').addEventListener('click',async()=>{activa=crearLista();await persistir();$('titulo').focus();});
   $('eliminar-lista').addEventListener('click',async()=>{
     if(!activa||!confirm(`¿Eliminar la lista «${activa.titulo}»?`))return;
@@ -141,6 +143,6 @@ async function iniciar() {
     activa=listas[0]??crearLista();if(!listas.length)await guardar('listas',activa);
     configurarEventos();renderizar();
     if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(console.warn);
-  }catch(error){console.error(error);avisar('No se pudo iniciar la aplicación. Revisá la consola.');}
+  }catch(error){console.error(error);avisar('Error al iniciar: '+error.message);}
 }
 iniciar();

@@ -1,6 +1,6 @@
 /**
  * Proyecto: Mi Changuito | Archivo: catalogos.js
- * Autor: Jordan Molinari | Versión: 0.1.0 | Fecha: 22/10/2026
+ * Autor: Jordan Molinari | Versión: 0.1.1 | Fecha: 22/10/2026
  * Descripción: Carga, validación, importación y exportación de catálogos JSON.
  */
 import { obtenerTodos, guardar } from './storage.js';
@@ -24,7 +24,9 @@ export function validarCatalogo(datos) {
 /** Inicializa catálogos predeterminados sin sobrescribir los personalizados. */
 export async function inicializarCatalogos() {
   const existentes = await obtenerTodos('catalogos');
-  const categorias = await (await fetch('./data/categorias.json')).json();
+  const respuestaCategorias = await fetch('./data/categorias.json');
+  if (!respuestaCategorias.ok) throw new Error('No se pudo cargar categorias.json');
+  const categorias = await respuestaCategorias.json();
   for (const categoria of categorias) {
     if (existentes.some(c => c.categoria === categoria.id)) continue;
     const respuesta = await fetch(`./data/catalogos/${categoria.id}.json`);
