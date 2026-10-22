@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   Proyecto: Mi Changuito | Archivo: index.html
-  Autor: Jordan Molinari | Versión: 0.1.2 | Fecha: 22/10/2026
+  Autor: Jordan Molinari | Versión: 0.1.3 | Fecha: 22/10/2026
   Descripción: Estructura semántica de la aplicación de listas de compras.
 -->
 <html lang="es-AR">
@@ -12,11 +12,11 @@
   <meta name="description" content="Listas de compras simples y organizadas, incluso sin conexión.">
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" href="./img/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/styles.css?v=013">
   <title>Mi Changuito</title>
 </head>
 <body>
-  <header class="cabecera"><div class="contenedor cabecera-interior"><h1>🛒 Mi Changuito</h1><div class="cabecera-acciones"><span class="etiqueta">Modo local · v0.1.2</span><button id="abrir-config" class="boton-icono" type="button" aria-label="Configuración" title="Configuración">⚙</button></div></div></header>
+  <header class="cabecera"><div class="contenedor cabecera-interior"><h1>🛒 Mi Changuito</h1><div class="cabecera-acciones"><span class="etiqueta">Modo local · v0.1.3</span><button id="abrir-config" class="boton-icono" type="button" aria-label="Configuración" title="Configuración">⚙</button></div></div></header>
   <main class="contenedor distribucion">
     <section id="pantalla-inicio" class="panel" aria-label="Mis listas">
       <div class="fila entre"><h2>Mis listas</h2><button id="nueva-lista" class="boton pequeno" type="button">+ Nueva lista</button></div>
@@ -39,7 +39,7 @@
         <label>Título<input id="titulo" type="text" maxlength="100" placeholder="Ej.: Compras del sábado"></label>
         <label>Visibilidad<select id="visibilidad"><option value="personal">Personal</option><option value="compartida" disabled>Compartida (próximamente)</option></select></label>
         <label>Fecha<input id="fecha" type="date"></label>
-        <label>Categoría<select id="categoria"></select></label>
+
       </div>
       <p class="ayuda">Las listas compartidas estarán disponibles al incorporar las cuentas y el servidor.</p>
       <div class="fila entre subtitulo"><h3>Productos</h3><span id="avance" class="etiqueta">0 de 0 marcados</span></div>
@@ -47,18 +47,18 @@
       <form id="form-producto" class="form-producto">
         <h3>Agregar producto</h3>
         <div class="form-grid">
+          <label>Categoría<select id="categoria"></select></label>
           <label>Producto<select id="producto-catalogo"></select></label>
-          <label>O escribí otro<input id="producto-libre" maxlength="100" placeholder="Producto personalizado"></label>
-          <label>Cantidad<input id="cantidad" type="number" min="0.001" step="any" value="1" required></label>
-          <label>Unidad<select id="unidad"><option value="un.">Unidad</option><option value="kg">Kilogramo</option><option value="g">Gramo</option><option value="l">Litro</option><option value="ml">Mililitro</option><option value="paq.">Paquete</option><option value="doc.">Docena</option></select></label>
-          <label>Precio por unidad ($, opcional)<input id="precio" type="number" min="0" step="0.01" placeholder="Sin precio"></label>
         </div>
+        <label id="grupo-producto-otro" class="campo-otro" hidden>Nombre del producto
+          <input id="producto-libre" type="text" maxlength="100" placeholder="Escribí el producto" autocomplete="off">
+        </label>
         <button class="boton" type="submit">+ Agregar al changuito</button>
       </form>
       <div class="totales"><div class="fila entre"><strong>Total estimado</strong><strong id="total">$ 0,00</strong></div><div class="fila entre"><span>Renglones</span><span id="renglones">0</span></div><div class="fila entre"><span>Cantidad total de productos</span><span id="cantidad-total">0</span></div><div class="fila entre"><span>Marcados</span><span id="marcados">0</span></div><small>El total incluye solo los productos con precio cargado.</small></div>
     </section>
   </main>
   <div id="mensaje" class="mensaje" role="status" aria-live="polite"></div>
-  <script type="module" src="./js/app.js?v=012"></script>
+  <script type="module" src="./js/app.js?v=013"></script>
 </body>
 </html>

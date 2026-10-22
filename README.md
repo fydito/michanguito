@@ -2,7 +2,17 @@
 
 PWA de listas de compras. Proyecto de Jordan Molinari.
 
-## Versión 0.1.0 (22/10/2026)
+## Versión 0.1.3 (22/10/2026)
+
+- Categoría y producto juntos al agregar un artículo; «Otro...» al final del catálogo.
+- Los artículos se agregan con cantidad 1 y sin precio.
+- Cantidad y precio unitario editables directamente en cada artículo; se guardan en IndexedDB al confirmar el campo.
+- Catálogos de categorías independientes de la lista; permite mezclar rubros.
+- Conserva las listas y los catálogos locales existentes al actualizar.
+- Nueva versión de caché PWA para evitar archivos estáticos desactualizados.
+
+## Funcionalidades de base
+
 
 - Listas personales con título, fecha, categoría, productos y precios opcionales.
 - Cantidades, unidades, numeración, casillas de comprado y totales.
