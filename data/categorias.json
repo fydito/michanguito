@@ -1,1 +1,26 @@
-
+[
+  {
+    "id": "almacen",
+    "nombre": "Almacen"
+  },
+  {
+    "id": "verduleria",
+    "nombre": "Verduleria"
+  },
+  {
+    "id": "carniceria",
+    "nombre": "Carniceria"
+  },
+  {
+    "id": "libreria",
+    "nombre": "Libreria"
+  },
+  {
+    "id": "farmacia",
+    "nombre": "Farmacia"
+  },
+  {
+    "id": "limpieza",
+    "nombre": "Limpieza"
+  }
+]
