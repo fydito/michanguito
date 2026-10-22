@@ -18,3 +18,16 @@
 .listado-listas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.75rem;margin-top:1.3rem}
 .lista-enlace{min-width:0;padding:1rem;font-weight:600}
 @media(max-width:760px){.distribucion{display:block}.listado-listas{display:grid;grid-template-columns:1fr}.lista-enlace{min-width:0}.cabecera-interior{padding:.8rem 0}}
+
+/*
+ * Versión 0.1.3: formulario mínimo y edición de cantidad/precio en cada producto.
+ * Los campos se adaptan al ancho disponible sin perder accesibilidad táctil.
+ */
+.campo-otro{margin-top:.8rem;max-width:100%}
+.item .descripcion{display:grid;gap:.5rem}
+.edicion-item{display:flex;flex-wrap:wrap;gap:.6rem}
+.campo-item{display:grid;gap:.25rem;flex:1 1 130px;max-width:200px;font-size:.75rem;color:#60736b;font-weight:500}
+.campo-item input{padding:.45rem .55rem;font-size:.9rem;font-weight:500}
+.item{align-items:flex-start}
+.item>.numero,.item>input[type=checkbox],.item>.importe,.item>.quitar{margin-top:.2rem}
+@media(max-width:520px){.item{gap:.45rem;padding:.6rem}.campo-item{flex-basis:100px}.edicion-item{gap:.4rem}.importe{max-width:76px;white-space:normal;text-align:right}.form-producto .form-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}}
