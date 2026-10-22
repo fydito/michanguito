@@ -8,3 +8,13 @@
 /* Versión 0.1.1: panel de configuración independiente y navegación compacta. */
 .cabecera-acciones{display:flex;align-items:center;gap:.6rem}.boton-icono{background:#ffffff20;border:1px solid #ffffff66;color:white;border-radius:10px;font-size:1.45rem;padding:.25rem .65rem}.dialogo-config{border:1px solid #dce8e1;border-radius:16px;box-shadow:0 15px 60px #0004;width:min(460px,94vw);padding:1.4rem;color:#20352f}.dialogo-config::backdrop{background:#15251c88}.dialogo-config h2{margin:0}.dialogo-config h3{margin-top:1.2rem}
 @media(max-width:760px){.distribucion{display:flex;flex-direction:column}.listado-listas{display:flex;overflow-x:auto;gap:.5rem}.lista-enlace{min-width:150px}.cabecera .etiqueta{display:none}}
+
+/* Versión 0.1.2: navegación por pantallas, sin barra lateral. */
+[hidden]{display:none!important}
+.distribucion{display:block;max-width:800px;margin:1.5rem auto 3rem}
+#pantalla-inicio{min-height:280px}
+#pantalla-editor{width:100%}
+#volver-listas{margin-bottom:1.2rem}
+.listado-listas{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.75rem;margin-top:1.3rem}
+.lista-enlace{min-width:0;padding:1rem;font-weight:600}
+@media(max-width:760px){.distribucion{display:block}.listado-listas{display:grid;grid-template-columns:1fr}.lista-enlace{min-width:0}.cabecera-interior{padding:.8rem 0}}
