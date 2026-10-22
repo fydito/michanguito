@@ -1,6 +1,6 @@
 /**
  * Proyecto: Mi Changuito | Archivo: app.js
- * Autor: Jordan Molinari | Versión: 0.1.2 | Fecha: 22/10/2026
+ * Autor: Jordan Molinari | Versión: 0.1.3 | Fecha: 22/10/2026
  * Descripción: Controlador principal de la interfaz y eventos del modo local.
  */
 import { obtenerTodos, guardar, eliminar } from './storage.js';
@@ -52,21 +52,59 @@ function renderizarNavegacion() {
     contenedor.append(boton);
   }
 }
-/** Completa el selector de categorías, incluidos catálogos importados. */
+/** Completa el selector de categorías de cada producto, no de toda la lista. */
 function renderizarCategorias() {
-  const selector = $('categoria'); selector.replaceChildren();
+  const selector = $('categoria');
+  const anterior = selector.value;
+  selector.replaceChildren();
   for (const catalogo of catalogos) {
-    const opcion = new Option(categorias.find(c=>c.id===catalogo.categoria)?.nombre ?? catalogo.categoria, catalogo.categoria);
-    selector.add(opcion);
+    selector.add(new Option(categorias.find(c => c.id === catalogo.categoria)?.nombre ?? catalogo.categoria, catalogo.categoria));
   }
-  if (activa && catalogos.some(c=>c.categoria===activa.categoria)) selector.value=activa.categoria;
+  if ([...selector.options].some(opcion => opcion.value === anterior)) selector.value = anterior;
 }
-/** Carga los productos del catálogo seleccionado. */
+/** Ofrece el catálogo elegido y una opción final para un producto libre. */
 function renderizarCatalogo() {
-  const selector = $('producto-catalogo'); selector.replaceChildren();
-  selector.add(new Option('Seleccionar producto',''));
-  const catalogo = catalogos.find(c=>c.categoria===activa?.categoria);
-  for (const producto of catalogo?.productos ?? []) selector.add(new Option(producto.nombre,producto.id));
+  const selector = $('producto-catalogo');
+  selector.replaceChildren();
+  selector.add(new Option('Seleccionar producto', ''));
+  const catalogo = catalogos.find(c => c.categoria === $('categoria').value);
+  for (const producto of catalogo?.productos ?? []) selector.add(new Option(producto.nombre, producto.id));
+  selector.add(new Option('Otro...', '__otro__'));
+  mostrarCampoOtro();
+}
+/** El nombre manual solo aparece al elegir «Otro». */
+function mostrarCampoOtro() {
+  const esOtro = $('producto-catalogo').value === '__otro__';
+  $('grupo-producto-otro').hidden = !esOtro;
+  $('producto-libre').required = esOtro;
+  if (!esOtro) $('producto-libre').value = '';
+}
+/** Construye un campo numérico accesible para modificar un renglón. */
+function crearCampoNumerico(item, propiedad, etiqueta, opciones = {}) {
+  const campo = document.createElement('label');
+  campo.className = 'campo-item';
+  campo.append(nodo('span', etiqueta));
+  const entrada = document.createElement('input');
+  entrada.type = 'number';
+  entrada.inputMode = 'decimal';
+  entrada.min = String(opciones.min ?? 0);
+  entrada.step = 'any';
+  entrada.value = item[propiedad] === null ? '' : String(item[propiedad]);
+  if (opciones.placeholder) entrada.placeholder = opciones.placeholder;
+  // Se guarda al confirmar el cambio, sin reconstruir el DOM mientras se escribe.
+  entrada.addEventListener('change', async () => {
+    const texto = entrada.value.trim();
+    const valor = texto === '' && propiedad === 'precio' ? null : Number(texto);
+    if ((texto === '' && propiedad === 'cantidad') || (valor !== null && (!Number.isFinite(valor) || valor < (opciones.min ?? 0)))) {
+      entrada.value = item[propiedad] === null ? '' : String(item[propiedad]);
+      avisar('Ingresá un valor válido.');
+      return;
+    }
+    item[propiedad] = valor;
+    await persistir();
+  });
+  campo.append(entrada);
+  return campo;
 }
 /** Presenta los renglones, numeración, casillas y subtotales. */
 function renderizarItems() {
@@ -77,10 +115,19 @@ function renderizarItems() {
     fila.append(nodo('span',`${indice+1}.`,'numero'));
     const check=document.createElement('input');check.type='checkbox';check.checked=item.comprado;check.setAttribute('aria-label',`Marcar ${item.nombre} como comprado`);
     check.addEventListener('change',async()=>{item.comprado=check.checked;await persistir();});fila.append(check);
-    const descripcion=nodo('div','','descripcion');descripcion.append(nodo('strong',item.nombre),nodo('small',`${item.cantidad} ${item.unidad}`));fila.append(descripcion);
-    fila.append(nodo('span',item.precio===null?'Sin precio':moneda(item.cantidad*item.precio),'importe'));
-    const quitar=nodo('button','×','quitar');quitar.type='button';quitar.setAttribute('aria-label',`Quitar ${item.nombre}`);
-    quitar.addEventListener('click',async()=>{activa.items.splice(indice,1);await persistir();});fila.append(quitar);
+    const descripcion = nodo('div', '', 'descripcion');
+    descripcion.append(nodo('strong', item.nombre));
+    const campos = nodo('div', '', 'edicion-item');
+    campos.append(crearCampoNumerico(item, 'cantidad', `Cantidad (${item.unidad})`, {min: 0.001}));
+    campos.append(crearCampoNumerico(item, 'precio', 'Precio unitario ($)', {min: 0, placeholder: 'Sin precio'}));
+    descripcion.append(campos);
+    fila.append(descripcion);
+    fila.append(nodo('span', item.precio === null ? 'Sin precio' : moneda(item.cantidad * item.precio), 'importe'));
+    const quitar = nodo('button', '×', 'quitar');
+    quitar.type = 'button';
+    quitar.setAttribute('aria-label', `Quitar ${item.nombre}`);
+    quitar.addEventListener('click', async () => { activa.items.splice(indice, 1); await persistir(); });
+    fila.append(quitar);
     contenedor.append(fila);
   });
   const totales=calcularTotales(activa.items);
@@ -117,20 +164,25 @@ function configurarEventos() {
   });
   $('titulo').addEventListener('change',async e=>{activa.titulo=e.target.value.trim()||'Nueva lista';await persistir();});
   $('fecha').addEventListener('change',async e=>{if(e.target.value){activa.fecha=e.target.value;await persistir();}});
-  $('categoria').addEventListener('change',async e=>{activa.categoria=e.target.value;await persistir();});
-  $('producto-catalogo').addEventListener('change',e=>{
-    const producto=catalogos.find(c=>c.categoria===activa.categoria)?.productos.find(p=>p.id===e.target.value);
-    if(producto)$('unidad').value=[...$('unidad').options].some(o=>o.value===producto.unidad)?producto.unidad:'un.';
+  $('categoria').addEventListener('change', renderizarCatalogo);
+  $('producto-catalogo').addEventListener('change', () => {
+    mostrarCampoOtro();
+    if ($('producto-catalogo').value === '__otro__') $('producto-libre').focus();
   });
-  $('form-producto').addEventListener('submit',async e=>{
-    e.preventDefault();
-    const seleccionado=catalogos.find(c=>c.categoria===activa.categoria)?.productos.find(p=>p.id===$('producto-catalogo').value);
-    const nombre=$('producto-libre').value.trim()||seleccionado?.nombre;
-    const cantidad=Number($('cantidad').value);
-    const precio=$('precio').value.trim()===''?null:Number($('precio').value);
-    if(!nombre||!Number.isFinite(cantidad)||cantidad<=0||(precio!==null&&(!Number.isFinite(precio)||precio<0))){avisar('Completá un producto y una cantidad válida.');return;}
-    activa.items.push({id:crypto.randomUUID(),nombre,cantidad,unidad:$('unidad').value,precio,comprado:false});
-    await persistir();$('producto-libre').value='';$('producto-catalogo').value='';$('cantidad').value='1';$('precio').value='';
+  $('form-producto').addEventListener('submit', async evento => {
+    evento.preventDefault();
+    const identificador = $('producto-catalogo').value;
+    const seleccionado = catalogos.find(c => c.categoria === $('categoria').value)?.productos.find(p => p.id === identificador);
+    const nombre = identificador === '__otro__' ? $('producto-libre').value.trim() : seleccionado?.nombre;
+    if (!nombre) { avisar('Elegí un producto o escribí su nombre.'); return; }
+    activa.items.push({
+      id: crypto.randomUUID(), nombre, cantidad: 1,
+      unidad: seleccionado?.unidad || 'un.', precio: null, comprado: false
+    });
+    await persistir();
+    $('producto-catalogo').value = '';
+    mostrarCampoOtro();
+    $('producto-catalogo').focus();
   });
   $('exportar-listas').addEventListener('click',()=>descargarJSON('mi-changuito-listas.json',{version:1,tipo:'listas',listas}));
   $('exportar-catalogo').addEventListener('click',()=>descargarJSON('mi-changuito-catalogos.json',{version:1,tipo:'catalogos',catalogos}));
