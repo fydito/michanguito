@@ -1,6 +1,6 @@
 /**
  * Proyecto: Mi Changuito | Archivo: app.js
- * Autor: Jordan Molinari | Versión: 0.1.1 | Fecha: 22/10/2026
+ * Autor: Jordan Molinari | Versión: 0.1.2 | Fecha: 22/10/2026
  * Descripción: Controlador principal de la interfaz y eventos del modo local.
  */
 import { obtenerTodos, guardar, eliminar } from './storage.js';
@@ -11,6 +11,14 @@ import { descargarJSON, leerJSON } from './archivos.js';
 const $ = id => document.getElementById(id);
 const moneda = numero => new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(numero);
 let listas = [], catalogos = [], categorias = [], activa = null;
+
+/** Alterna las pantallas sin mantener paneles laterales. */
+function mostrarPantalla(editor = false) {
+  $('pantalla-inicio').hidden = editor;
+  $('pantalla-editor').hidden = !editor;
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
 
 /** Muestra avisos breves sin interrumpir la edición. */
 function avisar(texto) {
@@ -40,7 +48,7 @@ function renderizarNavegacion() {
     const boton = nodo('button', lista.titulo, `lista-enlace${activa?.id===lista.id?' activa':''}`);
     boton.type='button';
     boton.append(nodo('small',lista.fecha));
-    boton.addEventListener('click',()=>{ activa=lista; renderizar(); });
+    boton.addEventListener('click',()=>{ activa=lista; renderizar(); mostrarPantalla(true); });
     contenedor.append(boton);
   }
 }
@@ -101,10 +109,11 @@ async function importarListas(datos) {
 function configurarEventos() {
   $('abrir-config').addEventListener('click', () => $('panel-config').showModal());
   $('cerrar-config').addEventListener('click', () => $('panel-config').close());
-  $('nueva-lista').addEventListener('click',async()=>{activa=crearLista();await persistir();$('titulo').focus();});
+  $('nueva-lista').addEventListener('click',async()=>{activa=crearLista();await persistir();mostrarPantalla(true);$('titulo').focus();});
+  $('volver-listas').addEventListener('click',()=>mostrarPantalla(false));
   $('eliminar-lista').addEventListener('click',async()=>{
     if(!activa||!confirm(`¿Eliminar la lista «${activa.titulo}»?`))return;
-    await eliminar('listas',activa.id);listas=await obtenerTodos('listas');activa=listas[0]??crearLista();await persistir();
+    await eliminar('listas',activa.id);listas=await obtenerTodos('listas');activa=listas[0]??crearLista();await persistir();mostrarPantalla(false);
   });
   $('titulo').addEventListener('change',async e=>{activa.titulo=e.target.value.trim()||'Nueva lista';await persistir();});
   $('fecha').addEventListener('change',async e=>{if(e.target.value){activa.fecha=e.target.value;await persistir();}});
@@ -141,7 +150,7 @@ async function iniciar() {
   try {
     categorias=await inicializarCatalogos();catalogos=await obtenerTodos('catalogos');listas=await obtenerTodos('listas');
     activa=listas[0]??crearLista();if(!listas.length)await guardar('listas',activa);
-    configurarEventos();renderizar();
+    configurarEventos();renderizar();mostrarPantalla(false);
     if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(console.warn);
   }catch(error){console.error(error);avisar('Error al iniciar: '+error.message);}
 }
