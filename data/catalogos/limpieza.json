@@ -5,27 +5,47 @@
     {
       "id": "detergente",
       "nombre": "Detergente",
-      "unidad": "un."
+      "unidad": "unid."
     },
     {
       "id": "lavandina",
       "nombre": "Lavandina",
-      "unidad": "l"
+      "unidad": "unid."
     },
     {
-      "id": "jabon-en-polvo",
-      "nombre": "Jabón en polvo",
-      "unidad": "kg"
+      "id": "insecticida",
+      "nombre": "Insecticida",
+      "unidad": "unid."
+    },
+    {
+      "id": "aromatizante-de-ambiente",
+      "nombre": "Aromatizante de ambiente",
+      "unidad": "unid."
+    },
+    {
+      "id": "desodorante-de-pisos",
+      "nombre": "Desodorante de pisos",
+      "unidad": "unid."
+    },
+    {
+      "id": "jabon-en-liq-lavarropa",
+      "nombre": "Jabón en Liq. Lavarropa",
+      "unidad": "unid."
+    },
+    {
+      "id": "rollos-de-papel-de-cocina",
+      "nombre": "Rollos de papel de cocina",
+      "unidad": "unid."
     },
     {
       "id": "esponja",
       "nombre": "Esponja",
-      "unidad": "un."
+      "unidad": "unid."
     },
     {
       "id": "bolsas-de-residuos",
       "nombre": "Bolsas de residuos",
-      "unidad": "paq."
+      "unidad": "unid."
     }
   ]
 }

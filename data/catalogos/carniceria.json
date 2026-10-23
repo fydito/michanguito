@@ -3,34 +3,114 @@
   "categoria": "carniceria",
   "productos": [
     {
-      "id": "carne-picada",
-      "nombre": "Carne picada",
-      "unidad": "kg"
+      "id": "carne-picada-kg",
+      "nombre": "Carne picada (Kg)",
+      "unidad": "unid."
+    },
+    {
+      "id": "milanesas-de-carne-kg",
+      "nombre": "Milanesas de Carne (Kg)",
+      "unidad": "unid."
+    },
+    {
+      "id": "milanesas-de-pollo-kg",
+      "nombre": "Milanesas de Pollo (Kg)",
+      "unidad": "unid."
+    },
+    {
+      "id": "pata-y-muslo",
+      "nombre": "Pata y muslo",
+      "unidad": "unid."
+    },
+    {
+      "id": "pollo-entero",
+      "nombre": "Pollo entero",
+      "unidad": "unid."
+    },
+    {
+      "id": "supremas-de-pollo",
+      "nombre": "Supremas de pollo",
+      "unidad": "unid."
+    },
+    {
+      "id": "colita-de-cuadril",
+      "nombre": "Colita de cuadril",
+      "unidad": "unid."
+    },
+    {
+      "id": "bifes-angostos",
+      "nombre": "Bifes angostos",
+      "unidad": "unid."
+    },
+    {
+      "id": "bifes-de-cerdo",
+      "nombre": "Bifes de cerdo",
+      "unidad": "unid."
+    },
+    {
+      "id": "carnaza-gral",
+      "nombre": "Carnaza (Gral)",
+      "unidad": "unid."
+    },
+    {
+      "id": "lomo",
+      "nombre": "Lomo",
+      "unidad": "unid."
+    },
+    {
+      "id": "carne-para-milanesa",
+      "nombre": "Carne para milanesa",
+      "unidad": "unid."
+    },
+    {
+      "id": "osobuco",
+      "nombre": "Osobuco",
+      "unidad": "unid."
+    },
+    {
+      "id": "bondiola",
+      "nombre": "Bondiola",
+      "unidad": "unid."
+    },
+    {
+      "id": "chorizos",
+      "nombre": "Chorizos",
+      "unidad": "unid."
+    },
+    {
+      "id": "morcilla",
+      "nombre": "Morcilla",
+      "unidad": "unid."
+    },
+    {
+      "id": "chinchulines",
+      "nombre": "Chinchulines",
+      "unidad": "unid."
+    },
+    {
+      "id": "molleja",
+      "nombre": "Molleja",
+      "unidad": "unid."
+    },
+    {
+      "id": "salchicha-parrillera",
+      "nombre": "Salchicha parrillera",
+      "unidad": "unid."
     },
     {
       "id": "asado",
       "nombre": "Asado",
-      "unidad": "kg"
+      "unidad": "unid."
     },
     {
-      "id": "pollo",
-      "nombre": "Pollo",
-      "unidad": "kg"
+      "id": "vacio",
+      "nombre": "Vacío",
+      "unidad": "unid."
     },
     {
-      "id": "milanesas",
-      "nombre": "Milanesas",
-      "unidad": "kg"
-    },
-    {
-      "id": "chorizo",
-      "nombre": "Chorizo",
-      "unidad": "kg"
-    },
-    {
-      "id": "bife",
-      "nombre": "Bife",
-      "unidad": "kg"
+      "id": "matambre",
+      "nombre": "Matambre",
+      "unidad": "unid."
     }
   ]
 }

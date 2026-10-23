@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "categoria": "bazar",
+  "productos": [
+    {
+      "id": "productos-de-bazar",
+      "nombre": "Productos de Bazar",
+      "unidad": "unid."
+    },
+    {
+      "id": "pilas-a",
+      "nombre": "Pilas A",
+      "unidad": "unid."
+    },
+    {
+      "id": "pilas-aa",
+      "nombre": "Pilas AA",
+      "unidad": "unid."
+    }
+  ]
+}

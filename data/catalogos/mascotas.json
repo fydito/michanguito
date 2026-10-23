@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "categoria": "mascotas",
+  "productos": [
+    {
+      "id": "comida-para-gatos",
+      "nombre": "Comida para Gatos",
+      "unidad": "unid."
+    },
+    {
+      "id": "comida-para-perros",
+      "nombre": "Comida para Perros",
+      "unidad": "unid."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "categoria": "higiene",
+  "productos": [
+    {
+      "id": "gel-para-cabello",
+      "nombre": "Gel para cabello",
+      "unidad": "unid."
+    },
+    {
+      "id": "desodorante-h-m",
+      "nombre": "Desodorante H/M",
+      "unidad": "unid."
+    },
+    {
+      "id": "hoja-de-afeitar-h-m",
+      "nombre": "Hoja de Afeitar H/M",
+      "unidad": "unid."
+    },
+    {
+      "id": "champu",
+      "nombre": "Champú",
+      "unidad": "unid."
+    },
+    {
+      "id": "acondicionador",
+      "nombre": "Acondicionador",
+      "unidad": "unid."
+    },
+    {
+      "id": "talco",
+      "nombre": "Talco",
+      "unidad": "unid."
+    },
+    {
+      "id": "jabon-de-tocador",
+      "nombre": "Jabón de Tocador",
+      "unidad": "unid."
+    },
+    {
+      "id": "jabon-en-liq-manos",
+      "nombre": "Jabón en Liq. Manos",
+      "unidad": "unid."
+    },
+    {
+      "id": "papel-higienico",
+      "nombre": "Papel higiénico",
+      "unidad": "unid."
+    },
+    {
+      "id": "toallas-femeninas",
+      "nombre": "Toallas femeninas",
+      "unidad": "unid."
+    },
+    {
+      "id": "panuelos-de-papel",
+      "nombre": "Pañuelos de papel",
+      "unidad": "unid."
+    }
+  ]
+}

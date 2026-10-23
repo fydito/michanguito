@@ -3,44 +3,104 @@
   "categoria": "verduleria",
   "productos": [
     {
-      "id": "papa",
-      "nombre": "Papa",
-      "unidad": "kg"
-    },
-    {
       "id": "tomate",
       "nombre": "Tomate",
-      "unidad": "kg"
+      "unidad": "unid."
     },
     {
-      "id": "cebolla",
-      "nombre": "Cebolla",
-      "unidad": "kg"
-    },
-    {
-      "id": "zanahoria",
-      "nombre": "Zanahoria",
-      "unidad": "kg"
+      "id": "tomates-cherry",
+      "nombre": "Tomates cherry",
+      "unidad": "unid."
     },
     {
       "id": "lechuga",
       "nombre": "Lechuga",
-      "unidad": "un."
+      "unidad": "unid."
     },
     {
-      "id": "manzana",
-      "nombre": "Manzana",
-      "unidad": "kg"
+      "id": "papa",
+      "nombre": "Papa",
+      "unidad": "unid."
     },
     {
-      "id": "banana",
-      "nombre": "Banana",
-      "unidad": "kg"
+      "id": "cebolla",
+      "nombre": "Cebolla",
+      "unidad": "unid."
     },
     {
-      "id": "naranja",
-      "nombre": "Naranja",
-      "unidad": "kg"
+      "id": "batata",
+      "nombre": "Batata",
+      "unidad": "unid."
+    },
+    {
+      "id": "zapallo",
+      "nombre": "Zapallo",
+      "unidad": "unid."
+    },
+    {
+      "id": "zapallitos",
+      "nombre": "Zapallitos",
+      "unidad": "unid."
+    },
+    {
+      "id": "zanahoria",
+      "nombre": "Zanahoria",
+      "unidad": "unid."
+    },
+    {
+      "id": "pepino",
+      "nombre": "Pepino",
+      "unidad": "unid."
+    },
+    {
+      "id": "pimientos",
+      "nombre": "Pimientos",
+      "unidad": "unid."
+    },
+    {
+      "id": "mandioca",
+      "nombre": "Mandioca",
+      "unidad": "unid."
+    },
+    {
+      "id": "acelga",
+      "nombre": "Acelga",
+      "unidad": "unid."
+    },
+    {
+      "id": "espinaca",
+      "nombre": "Espinaca",
+      "unidad": "unid."
+    },
+    {
+      "id": "hinojos",
+      "nombre": "Hinojos",
+      "unidad": "unid."
+    },
+    {
+      "id": "manzanas",
+      "nombre": "Manzanas",
+      "unidad": "unid."
+    },
+    {
+      "id": "naranjas",
+      "nombre": "Naranjas",
+      "unidad": "unid."
+    },
+    {
+      "id": "mandarinas",
+      "nombre": "Mandarinas",
+      "unidad": "unid."
+    },
+    {
+      "id": "bananas",
+      "nombre": "Bananas",
+      "unidad": "unid."
+    },
+    {
+      "id": "peras",
+      "nombre": "Peras",
+      "unidad": "unid."
     }
   ]
 }

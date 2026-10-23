@@ -3,54 +3,444 @@
   "categoria": "almacen",
   "productos": [
     {
-      "id": "leche",
-      "nombre": "Leche",
-      "unidad": "l"
-    },
-    {
       "id": "arroz",
       "nombre": "Arroz",
-      "unidad": "kg"
+      "unidad": "unid."
     },
     {
-      "id": "fideos",
-      "nombre": "Fideos",
-      "unidad": "paq."
+      "id": "fideos-largos",
+      "nombre": "Fideos Largos",
+      "unidad": "unid."
     },
     {
-      "id": "yerba",
-      "nombre": "Yerba",
-      "unidad": "kg"
+      "id": "fideos-monos-tirabuzon-etc",
+      "nombre": "Fideos (moños, tirabuzón, etc.)",
+      "unidad": "unid."
     },
     {
-      "id": "aceite",
-      "nombre": "Aceite",
-      "unidad": "l"
+      "id": "fideos-de-sopa",
+      "nombre": "Fideos de Sopa",
+      "unidad": "unid."
+    },
+    {
+      "id": "harina-comun",
+      "nombre": "Harina Común",
+      "unidad": "unid."
+    },
+    {
+      "id": "harina-leudante",
+      "nombre": "Harina Leudante",
+      "unidad": "unid."
     },
     {
       "id": "azucar",
       "nombre": "Azúcar",
-      "unidad": "kg"
+      "unidad": "unid."
     },
     {
-      "id": "harina",
-      "nombre": "Harina",
-      "unidad": "kg"
+      "id": "aceite",
+      "nombre": "Aceite",
+      "unidad": "unid."
     },
     {
-      "id": "pan",
-      "nombre": "Pan",
-      "unidad": "kg"
+      "id": "vinagre",
+      "nombre": "Vinagre",
+      "unidad": "unid."
     },
     {
-      "id": "cafe",
-      "nombre": "Café",
-      "unidad": "paq."
+      "id": "sal-fina",
+      "nombre": "Sal fina",
+      "unidad": "unid."
     },
     {
-      "id": "galletitas",
-      "nombre": "Galletitas",
-      "unidad": "paq."
+      "id": "sal-gruesa",
+      "nombre": "Sal gruesa",
+      "unidad": "unid."
+    },
+    {
+      "id": "lentejas",
+      "nombre": "Lentejas",
+      "unidad": "unid."
+    },
+    {
+      "id": "lata-de-arvejas",
+      "nombre": "Lata de Arvejas",
+      "unidad": "unid."
+    },
+    {
+      "id": "lata-de-tomate",
+      "nombre": "Lata de Tomate",
+      "unidad": "unid."
+    },
+    {
+      "id": "lata-de-choclo",
+      "nombre": "Lata de Choclo",
+      "unidad": "unid."
+    },
+    {
+      "id": "lata-de-lentejas",
+      "nombre": "Lata de Lentejas",
+      "unidad": "unid."
+    },
+    {
+      "id": "lata-de-garbanzos",
+      "nombre": "Lata de Garbanzos",
+      "unidad": "unid."
+    },
+    {
+      "id": "pure-instantaneo",
+      "nombre": "Puré instantáneo",
+      "unidad": "unid."
+    },
+    {
+      "id": "yerba-mate",
+      "nombre": "Yerba Mate",
+      "unidad": "unid."
+    },
+    {
+      "id": "mate-cocido",
+      "nombre": "Mate Cocido",
+      "unidad": "unid."
+    },
+    {
+      "id": "te",
+      "nombre": "Té",
+      "unidad": "unid."
+    },
+    {
+      "id": "polenta-de-maiz",
+      "nombre": "Polenta de maíz",
+      "unidad": "unid."
+    },
+    {
+      "id": "semola-de-maiz",
+      "nombre": "Sémola de maíz",
+      "unidad": "unid."
+    },
+    {
+      "id": "mermelada",
+      "nombre": "Mermelada",
+      "unidad": "unid."
+    },
+    {
+      "id": "dulce-de-leche",
+      "nombre": "Dulce de Leche",
+      "unidad": "unid."
+    },
+    {
+      "id": "miel",
+      "nombre": "Miel",
+      "unidad": "unid."
+    },
+    {
+      "id": "mayonesa",
+      "nombre": "Mayonesa",
+      "unidad": "unid."
+    },
+    {
+      "id": "mostaza",
+      "nombre": "Mostaza",
+      "unidad": "unid."
+    },
+    {
+      "id": "ketchup",
+      "nombre": "Kétchup",
+      "unidad": "unid."
+    },
+    {
+      "id": "salsa-golf",
+      "nombre": "Salsa Golf",
+      "unidad": "unid."
+    },
+    {
+      "id": "huevos-6",
+      "nombre": "Huevos (6)",
+      "unidad": "unid."
+    },
+    {
+      "id": "huevos-12",
+      "nombre": "Huevos (12)",
+      "unidad": "unid."
+    },
+    {
+      "id": "huevos-maple",
+      "nombre": "Huevos (Maple)",
+      "unidad": "unid."
+    },
+    {
+      "id": "galletitas-crackers",
+      "nombre": "Galletitas Crackers",
+      "unidad": "unid."
+    },
+    {
+      "id": "galletitas-dulces",
+      "nombre": "Galletitas Dulces",
+      "unidad": "unid."
+    },
+    {
+      "id": "pan-lactal",
+      "nombre": "Pan Lactal",
+      "unidad": "unid."
+    },
+    {
+      "id": "pan-de-panchos",
+      "nombre": "Pan de Panchos",
+      "unidad": "unid."
+    },
+    {
+      "id": "pan-de-hamburguesas",
+      "nombre": "Pan de Hamburguesas",
+      "unidad": "unid."
+    },
+    {
+      "id": "rapiditas-tortillas-de-maiz",
+      "nombre": "Rapiditas (Tortillas de maíz)",
+      "unidad": "unid."
+    },
+    {
+      "id": "agua-mineral-litro",
+      "nombre": "Agua mineral (Litro)",
+      "unidad": "unid."
+    },
+    {
+      "id": "agua-mineral-bidon",
+      "nombre": "Agua mineral (Bidón)",
+      "unidad": "unid."
+    },
+    {
+      "id": "gaseosa",
+      "nombre": "Gaseosa",
+      "unidad": "unid."
+    },
+    {
+      "id": "soda",
+      "nombre": "Soda",
+      "unidad": "unid."
+    },
+    {
+      "id": "jugo-seco-sobre",
+      "nombre": "Jugo Seco (Sobre)",
+      "unidad": "unid."
+    },
+    {
+      "id": "vino-blanco",
+      "nombre": "Vino Blanco",
+      "unidad": "unid."
+    },
+    {
+      "id": "vino-tinto",
+      "nombre": "Vino Tinto",
+      "unidad": "unid."
+    },
+    {
+      "id": "cerveza-lata",
+      "nombre": "Cerveza (Lata)",
+      "unidad": "unid."
+    },
+    {
+      "id": "cerveza-botella",
+      "nombre": "Cerveza (Botella)",
+      "unidad": "unid."
+    },
+    {
+      "id": "espumante",
+      "nombre": "Espumante",
+      "unidad": "unid."
+    },
+    {
+      "id": "sidra-ana-fizz",
+      "nombre": "Sidra/Ana Fizz",
+      "unidad": "unid."
+    },
+    {
+      "id": "bebidas-espirituosas",
+      "nombre": "Bebidas Espirituosas",
+      "unidad": "unid."
+    },
+    {
+      "id": "bizcochuelo",
+      "nombre": "Bizcochuelo",
+      "unidad": "unid."
+    },
+    {
+      "id": "durazno-en-almibar",
+      "nombre": "Durazno en almíbar",
+      "unidad": "unid."
+    },
+    {
+      "id": "peras-en-almibar",
+      "nombre": "Peras en almíbar",
+      "unidad": "unid."
+    },
+    {
+      "id": "anana-en-almibar",
+      "nombre": "Ananá en almíbar",
+      "unidad": "unid."
+    },
+    {
+      "id": "coctel-de-frutas",
+      "nombre": "Cóctel de frutas",
+      "unidad": "unid."
+    },
+    {
+      "id": "hamburguesa",
+      "nombre": "Hamburguesa",
+      "unidad": "unid."
+    },
+    {
+      "id": "salchichas",
+      "nombre": "Salchichas",
+      "unidad": "unid."
+    },
+    {
+      "id": "nuggets-de-pollo",
+      "nombre": "Nuggets de pollo",
+      "unidad": "unid."
+    },
+    {
+      "id": "queso-rallado",
+      "nombre": "Queso rallado",
+      "unidad": "unid."
+    },
+    {
+      "id": "leche",
+      "nombre": "Leche",
+      "unidad": "unid."
+    },
+    {
+      "id": "tapas-empanadas",
+      "nombre": "Tapas empanadas",
+      "unidad": "unid."
+    },
+    {
+      "id": "tapas-pastelitos",
+      "nombre": "Tapas pastelitos",
+      "unidad": "unid."
+    },
+    {
+      "id": "tapas-para-tarta",
+      "nombre": "Tapas para tarta",
+      "unidad": "unid."
+    },
+    {
+      "id": "queso-cremoso",
+      "nombre": "Queso cremoso",
+      "unidad": "unid."
+    },
+    {
+      "id": "queso-de-maquina",
+      "nombre": "Queso de máquina",
+      "unidad": "unid."
+    },
+    {
+      "id": "otros-quesos",
+      "nombre": "Otros quesos",
+      "unidad": "unid."
+    },
+    {
+      "id": "fiambre",
+      "nombre": "Fiambre",
+      "unidad": "unid."
+    },
+    {
+      "id": "salamin-longaniza",
+      "nombre": "Salamín/Longaniza",
+      "unidad": "unid."
+    },
+    {
+      "id": "panceta",
+      "nombre": "Panceta",
+      "unidad": "unid."
+    },
+    {
+      "id": "oregano",
+      "nombre": "Orégano",
+      "unidad": "unid."
+    },
+    {
+      "id": "condimento-de-pizza",
+      "nombre": "Condimento de pizza",
+      "unidad": "unid."
+    },
+    {
+      "id": "pimenton-dulce",
+      "nombre": "Pimentón dulce",
+      "unidad": "unid."
+    },
+    {
+      "id": "pimienta-blanca",
+      "nombre": "Pimienta Blanca",
+      "unidad": "unid."
+    },
+    {
+      "id": "condimento-arroz",
+      "nombre": "Condimento Arroz",
+      "unidad": "unid."
+    },
+    {
+      "id": "condimento-carne",
+      "nombre": "Condimento Carne",
+      "unidad": "unid."
+    },
+    {
+      "id": "cafe-instantaneo",
+      "nombre": "Café Instantáneo",
+      "unidad": "unid."
+    },
+    {
+      "id": "cafe-molido-filtro",
+      "nombre": "Café Molido (Filtro)",
+      "unidad": "unid."
+    },
+    {
+      "id": "edulcorante",
+      "nombre": "Edulcorante",
+      "unidad": "unid."
+    },
+    {
+      "id": "avena",
+      "nombre": "Avena",
+      "unidad": "unid."
+    },
+    {
+      "id": "snacks-salados",
+      "nombre": "Snacks Salados",
+      "unidad": "unid."
+    },
+    {
+      "id": "snacks-dulces",
+      "nombre": "Snacks Dulces",
+      "unidad": "unid."
+    },
+    {
+      "id": "yogur",
+      "nombre": "Yogur",
+      "unidad": "unid."
+    },
+    {
+      "id": "manteca",
+      "nombre": "Manteca",
+      "unidad": "unid."
+    },
+    {
+      "id": "crema",
+      "nombre": "Crema",
+      "unidad": "unid."
+    },
+    {
+      "id": "caramelos-menta-miel",
+      "nombre": "Caramelos Menta/Miel",
+      "unidad": "unid."
+    },
+    {
+      "id": "golosinas-varias",
+      "nombre": "Golosinas Varias",
+      "unidad": "unid."
+    },
+    {
+      "id": "carbon",
+      "nombre": "Carbón",
+      "unidad": "unid."
     }
   ]
 }
