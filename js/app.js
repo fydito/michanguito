@@ -1,6 +1,6 @@
 /**
  * Proyecto: Mi Changuito | Archivo: app.js
- * Autor: Jordan Molinari | Versión: 0.1.3 | Fecha: 22/10/2026
+ * Autor: Jordan Molinari | Versión: 0.1.4 | Fecha: 22/10/2026
  * Descripción: Controlador principal de la interfaz y eventos del modo local.
  */
 import { obtenerTodos, guardar, eliminar } from './storage.js';
@@ -11,6 +11,84 @@ import { descargarJSON, leerJSON } from './archivos.js';
 const $ = id => document.getElementById(id);
 const moneda = numero => new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(numero);
 let listas = [], catalogos = [], categorias = [], activa = null;
+const CLAVE_PREFERENCIAS = 'mi-changuito-preferencias';
+let preferencias = { confirmarBorrado: true, permitirDeshacer: true };
+let borradoPendiente = null;
+let ultimoBorrado = null;
+let temporizadorDeshacer = null;
+
+/** Recupera preferencias sin alterar los datos existentes de IndexedDB. */
+function cargarPreferencias() {
+  try {
+    const guardadas = JSON.parse(localStorage.getItem(CLAVE_PREFERENCIAS) || '{}');
+    preferencias = { ...preferencias, ...guardadas };
+  } catch (error) {
+    console.warn('No se pudieron leer las preferencias:', error);
+  }
+  $('confirmar-borrado').checked = preferencias.confirmarBorrado;
+  $('permitir-deshacer').checked = preferencias.permitirDeshacer;
+}
+
+/** Guarda las preferencias generales del dispositivo. */
+function guardarPreferencias() {
+  try { localStorage.setItem(CLAVE_PREFERENCIAS, JSON.stringify(preferencias)); }
+  catch (error) { console.warn('No se pudieron guardar las preferencias:', error); }
+}
+
+/** Cierra un aviso anterior y descarta la posibilidad de deshacerlo. */
+function cerrarDeshacer() {
+  clearTimeout(temporizadorDeshacer);
+  ultimoBorrado = null;
+  $('deshacer-aviso').hidden = true;
+}
+
+/** Elimina por identificador estable y ofrece deshacer si está habilitado. */
+async function borrarItem(idLista, idItem) {
+  const lista = listas.find(elemento => elemento.id === idLista);
+  if (!lista) return;
+  const indice = lista.items.findIndex(elemento => elemento.id === idItem);
+  if (indice < 0) return;
+  cerrarDeshacer();
+  const [item] = lista.items.splice(indice, 1);
+  ultimoBorrado = preferencias.permitirDeshacer ? { idLista, item, indice } : null;
+  await guardar('listas', lista);
+  listas = await obtenerTodos('listas');
+  if (activa?.id === idLista) activa = listas.find(elemento => elemento.id === idLista);
+  renderizar();
+  if (ultimoBorrado) {
+    $('deshacer-texto').textContent = `Se eliminó «${item.nombre}».`;
+    $('deshacer-aviso').hidden = false;
+    temporizadorDeshacer = setTimeout(cerrarDeshacer, 5000);
+  } else avisar(`Se eliminó «${item.nombre}».`);
+}
+
+/** Solicita confirmación antes de borrar, según la preferencia guardada. */
+function solicitarBorrado(item) {
+  if (!activa) return;
+  const idLista = activa.id;
+  if (!preferencias.confirmarBorrado) {
+    borrarItem(idLista, item.id).catch(error => avisar(error.message));
+    return;
+  }
+  borradoPendiente = { idLista, idItem: item.id };
+  $('confirmar-item-texto').textContent = `¿Querés eliminar «${item.nombre}» de esta lista?`;
+  $('confirmar-item').showModal();
+}
+
+/** Restituye el producto en su posición original si todavía existe la lista. */
+async function deshacerBorrado() {
+  if (!ultimoBorrado) return;
+  const { idLista, item, indice } = ultimoBorrado;
+  cerrarDeshacer();
+  const lista = listas.find(elemento => elemento.id === idLista);
+  if (!lista || lista.items.some(elemento => elemento.id === item.id)) return;
+  lista.items.splice(Math.min(indice, lista.items.length), 0, item);
+  await guardar('listas', lista);
+  listas = await obtenerTodos('listas');
+  if (activa?.id === idLista) activa = listas.find(elemento => elemento.id === idLista);
+  renderizar();
+  avisar('Producto recuperado.');
+}
 
 /** Alterna las pantallas sin mantener paneles laterales. */
 function mostrarPantalla(editor = false) {
@@ -106,36 +184,50 @@ function crearCampoNumerico(item, propiedad, etiqueta, opciones = {}) {
   campo.append(entrada);
   return campo;
 }
-/** Presenta los renglones, numeración, casillas y subtotales. */
+/** Presenta cada producto en una sola línea, con el tilde al extremo derecho. */
 function renderizarItems() {
-  const contenedor=$('productos-lista'); contenedor.replaceChildren();
-  if (!activa.items.length) contenedor.append(nodo('p','Todavía no agregaste productos.','vacio'));
-  activa.items.forEach((item,indice)=>{
-    const fila=nodo('div','','item'+(item.comprado?' comprado':''));
-    fila.append(nodo('span',`${indice+1}.`,'numero'));
-    const check=document.createElement('input');check.type='checkbox';check.checked=item.comprado;check.setAttribute('aria-label',`Marcar ${item.nombre} como comprado`);
-    check.addEventListener('change',async()=>{item.comprado=check.checked;await persistir();});fila.append(check);
-    const descripcion = nodo('div', '', 'descripcion');
-    descripcion.append(nodo('strong', item.nombre));
-    const campos = nodo('div', '', 'edicion-item');
-    campos.append(crearCampoNumerico(item, 'cantidad', `Cantidad (${item.unidad})`, {min: 0.001}));
-    campos.append(crearCampoNumerico(item, 'precio', 'Precio unitario ($)', {min: 0, placeholder: 'Sin precio'}));
-    descripcion.append(campos);
-    fila.append(descripcion);
-    fila.append(nodo('span', item.precio === null ? 'Sin precio' : moneda(item.cantidad * item.precio), 'importe'));
+  const contenedor = $('productos-lista');
+  contenedor.replaceChildren();
+  if (!activa.items.length) contenedor.append(nodo('p', 'Todavía no agregaste productos.', 'vacio'));
+
+  activa.items.forEach((item, indice) => {
+    const fila = nodo('div', '', 'item item-compacto' + (item.comprado ? ' comprado' : ''));
+    fila.append(nodo('span', `${indice + 1}.`, 'numero'));
+
+    const nombre = nodo('strong', item.nombre, 'nombre-producto');
+    nombre.title = item.nombre;
+    fila.append(nombre);
+
+    // Cantidad y precio se editan directamente en el renglón.
+    fila.append(crearCampoNumerico(item, 'cantidad', `Cant. (${item.unidad})`, { min: 0.001 }));
+    fila.append(crearCampoNumerico(item, 'precio', 'Precio ($)', { min: 0, placeholder: '—' }));
+
     const quitar = nodo('button', '×', 'quitar');
     quitar.type = 'button';
-    quitar.setAttribute('aria-label', `Quitar ${item.nombre}`);
-    quitar.addEventListener('click', async () => { activa.items.splice(indice, 1); await persistir(); });
+    quitar.title = `Eliminar ${item.nombre}`;
+    quitar.setAttribute('aria-label', `Eliminar ${item.nombre}`);
+    quitar.addEventListener('click', () => solicitarBorrado(item));
     fila.append(quitar);
+
+    // El control más utilizado va al final, separado del botón de borrar.
+    const marcar = nodo('button', '✓', 'marcar' + (item.comprado ? ' marcado' : ''));
+    marcar.type = 'button';
+    marcar.setAttribute('aria-pressed', String(Boolean(item.comprado)));
+    marcar.setAttribute('aria-label', `${item.comprado ? 'Desmarcar' : 'Marcar'} ${item.nombre} como comprado`);
+    marcar.addEventListener('click', async () => {
+      item.comprado = !item.comprado;
+      await persistir();
+    });
+    fila.append(marcar);
     contenedor.append(fila);
   });
-  const totales=calcularTotales(activa.items);
-  $('total').textContent=moneda(totales.total);
-  $('renglones').textContent=totales.renglones;
-  $('cantidad-total').textContent=Number(totales.cantidad.toFixed(3)).toLocaleString('es-AR');
-  $('marcados').textContent=totales.marcados;
-  $('avance').textContent=`${totales.marcados} de ${totales.renglones} marcados`;
+
+  const totales = calcularTotales(activa.items);
+  $('total').textContent = moneda(totales.total);
+  $('renglones').textContent = totales.renglones;
+  $('cantidad-total').textContent = Number(totales.cantidad.toFixed(3)).toLocaleString('es-AR');
+  $('marcados').textContent = totales.marcados;
+  $('avance').textContent = `${totales.marcados} de ${totales.renglones} marcados`;
 }
 /** Actualiza la interfaz a partir del estado persistido. */
 function renderizar() {
@@ -154,6 +246,29 @@ async function importarListas(datos) {
 }
 /** Asocia los eventos de edición, importación y exportación. */
 function configurarEventos() {
+  $('confirmar-borrado').addEventListener('change', evento => {
+    preferencias.confirmarBorrado = evento.target.checked;
+    guardarPreferencias();
+  });
+  $('permitir-deshacer').addEventListener('change', evento => {
+    preferencias.permitirDeshacer = evento.target.checked;
+    guardarPreferencias();
+    if (!preferencias.permitirDeshacer) cerrarDeshacer();
+  });
+  $('cancelar-item').addEventListener('click', () => {
+    borradoPendiente = null;
+    $('confirmar-item').close();
+  });
+  $('confirmar-item').addEventListener('close', () => { borradoPendiente = null; });
+  $('aceptar-item').addEventListener('click', async () => {
+    const pendiente = borradoPendiente;
+    $('confirmar-item').close();
+    if (pendiente) {
+      try { await borrarItem(pendiente.idLista, pendiente.idItem); }
+      catch (error) { avisar(error.message); }
+    }
+  });
+  $('deshacer-boton').addEventListener('click', () => deshacerBorrado().catch(error => avisar(error.message)));
   $('abrir-config').addEventListener('click', () => $('panel-config').showModal());
   $('cerrar-config').addEventListener('click', () => $('panel-config').close());
   $('nueva-lista').addEventListener('click',async()=>{activa=crearLista();await persistir();mostrarPantalla(true);$('titulo').focus();});
@@ -202,7 +317,7 @@ async function iniciar() {
   try {
     categorias=await inicializarCatalogos();catalogos=await obtenerTodos('catalogos');listas=await obtenerTodos('listas');
     activa=listas[0]??crearLista();if(!listas.length)await guardar('listas',activa);
-    configurarEventos();renderizar();mostrarPantalla(false);
+    cargarPreferencias();configurarEventos();renderizar();mostrarPantalla(false);
     if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(console.warn);
   }catch(error){console.error(error);avisar('Error al iniciar: '+error.message);}
 }
