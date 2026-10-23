@@ -264,3 +264,112 @@ input::placeholder { color:var(--texto-secundario);opacity:.88;font-weight:450; 
 .totales strong, .importe { color:var(--texto-item);font-weight:800; }
 .item-compacto .marcar.marcado { background:var(--resalte);color:var(--acento-fuerte);border-color:var(--acento); }
 :root[data-modo="noche"] .item-compacto .marcar.marcado { color:var(--texto-item); }
+
+
+/*
+ * Mi Changuito — v0.1.7 | 23/10/2026
+ * Soft UI: superficies escalonadas, controles hundidos y botones elevados.
+ * Solo apariencia: no modifica datos, orden de productos ni eventos.
+ */
+:root {
+  --soft-luz:#ffffffb8;
+  --soft-sombra:#253d3220;
+  --tarjeta:color-mix(in srgb,var(--superficie) 90%,var(--acento) 10%);
+  --campo-soft:color-mix(in srgb,var(--entrada) 87%,var(--acento) 13%);
+  --separador:color-mix(in srgb,var(--borde) 75%,var(--acento) 25%);
+}
+:root[data-modo="noche"] {
+  --soft-luz:#ffffff0a;
+  --soft-sombra:#0000005c;
+  --tarjeta:color-mix(in srgb,var(--superficie) 86%,var(--acento) 14%);
+  --campo-soft:color-mix(in srgb,var(--entrada) 89%,var(--acento) 11%);
+}
+/* Una profundidad sutil en el contenedor, incluso en pantallas pequeñas. */
+.panel {
+  border-radius:22px;
+  border-color:var(--separador);
+  box-shadow: 0 10px 28px var(--soft-sombra), inset 0 1px 0 var(--soft-luz);
+}
+/* Cada lista y producto se distingue claramente del panel. */
+.lista-enlace,
+.item.item-compacto {
+  background:var(--tarjeta);
+  border:1px solid var(--separador);
+  border-radius:15px;
+  box-shadow: 4px 5px 12px var(--soft-sombra), inset 0 1px 0 var(--soft-luz);
+  transition:background-color .15s ease,box-shadow .15s ease,border-color .15s ease;
+}
+.lista-enlace:hover,
+.item.item-compacto:focus-within {
+  border-color:var(--acento);
+  box-shadow: 2px 4px 14px var(--soft-sombra), inset 0 1px 0 var(--soft-luz);
+}
+.lista-enlace.activa { background:var(--acento-suave);border:2px solid var(--acento); }
+.lista-enlace { font-weight:800;letter-spacing:.01em; }
+.item-compacto .nombre-producto {
+  color:var(--texto-item);
+  font-weight:800;
+  font-size:.94rem;
+  line-height:1.25;
+}
+.item-compacto.comprado .nombre-producto {
+  color:var(--texto-secundario);
+  text-decoration:line-through;
+  text-decoration-thickness:2px;
+  text-decoration-color:var(--acento);
+}
+/* Los campos se ven hundidos frente a las tarjetas elevadas. */
+.form-grid input, .form-grid select,
+.form-producto input, .form-producto select,
+.campo-item input, .dialogo-config select,
+.dialogo-config input:not([type="checkbox"]):not([type="radio"]) {
+  background:var(--campo-soft);
+  border:1px solid var(--campo-borde);
+  border-radius:11px;
+  color:var(--texto-campo);
+  box-shadow:inset 2px 2px 5px var(--soft-sombra),inset -1px -1px 2px var(--soft-luz);
+}
+.form-grid input:focus, .form-grid select:focus,
+.form-producto input:focus, .form-producto select:focus,
+.campo-item input:focus {
+  background:var(--campo-foco);
+  border-color:var(--acento);
+  outline:2px solid var(--acento);
+  outline-offset:1px;
+}
+.form-grid label,.form-producto label,.campo-item {font-weight:750;}
+.boton:not(.peligro),.boton-icono {
+  border-radius:11px;
+  box-shadow:0 3px 9px var(--soft-sombra),inset 0 1px 0 #ffffff32;
+}
+/* Tilde neutro antes de comprar, lleno en el color del tema al marcar. */
+.item-compacto .marcar {
+  background:var(--campo-soft);
+  border:1.5px solid var(--campo-borde);
+  border-radius:11px;
+  color:var(--texto-secundario);
+  font-weight:900;
+  font-size:1.55rem;
+  box-shadow:inset 1px 1px 3px var(--soft-sombra);
+  transition:background-color .15s,color .15s,transform .15s;
+}
+.item-compacto .marcar.marcado {
+  background:var(--acento);
+  border-color:var(--acento);
+  color:#fff;
+  box-shadow:0 3px 8px var(--soft-sombra),inset 0 1px 0 #ffffff40;
+}
+:root[data-modo="noche"] .item-compacto .marcar.marcado { color:#10131a; }
+.item-compacto .marcar:active { transform:scale(.96); }
+/* Separación táctil adicional sin modificar el orden de columnas. */
+.item-compacto .quitar {margin-right:3px;}
+.totales { border-radius:16px;box-shadow:inset 1px 1px 5px var(--soft-sombra); }
+@media(max-width:600px){
+  .panel {border-radius:16px;}
+  .item.item-compacto {gap:.3rem;}
+  .item-compacto .nombre-producto {font-size:.81rem;}
+  .item-compacto .quitar {margin-right:0;}
+}
+@media(prefers-reduced-motion:reduce){
+  .lista-enlace,.item.item-compacto,.item-compacto .marcar {transition:none;}
+}
