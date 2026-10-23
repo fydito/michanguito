@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   Proyecto: Mi Changuito | Archivo: index.html
-  Autor: Jordan Molinari | Versión: 0.1.7 | Fecha: 22/10/2026
+  Autor: Jordan Molinari | Versión: 0.1.8 | Fecha: 22/10/2026
   Descripción: Estructura semántica de la aplicación de listas de compras.
 -->
 <html lang="es-AR">
@@ -12,11 +12,11 @@
   <meta name="description" content="Listas de compras simples y organizadas, incluso sin conexión.">
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" href="./img/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./css/styles.css?v=017">
+  <link rel="stylesheet" href="./css/styles.css?v=019">
   <title>Mi Changuito</title>
 </head>
 <body>
-  <header class="cabecera"><div class="contenedor cabecera-interior"><h1>🛒 Mi Changuito</h1><div class="cabecera-acciones"><span class="etiqueta">Modo local · v0.1.7</span><button id="abrir-config" class="boton-icono" type="button" aria-label="Configuración" title="Configuración">⚙</button></div></div></header>
+  <header class="cabecera"><div class="contenedor cabecera-interior"><h1>🛒 Mi Changuito</h1><div class="cabecera-acciones"><span class="etiqueta">Modo local · v0.1.9</span><button id="abrir-config" class="boton-icono" type="button" aria-label="Configuración" title="Configuración">⚙</button></div></div></header>
   <main class="contenedor distribucion">
     <section id="pantalla-inicio" class="panel" aria-label="Mis listas">
       <div class="fila entre"><h2>Mis listas</h2><button id="nueva-lista" class="boton pequeno" type="button">+ Nueva lista</button></div>
@@ -31,6 +31,10 @@
           <button type="button" class="muestra-tema" data-elegir-tema="azul" aria-label="Azul" title="Azul" style="--muestra:#2864ba"></button>
           <button type="button" class="muestra-tema" data-elegir-tema="violeta" aria-label="Violeta" title="Violeta" style="--muestra:#7750a6"></button>
           <button type="button" class="muestra-tema" data-elegir-tema="terracota" aria-label="Terracota" title="Terracota" style="--muestra:#ad593b"></button>
+          <button type="button" class="muestra-tema" data-elegir-tema="rubi" aria-label="Rojo rubí" title="Rojo rubí" style="--muestra:#c62842"></button>
+          <button type="button" class="muestra-tema" data-elegir-tema="electrico" aria-label="Azul eléctrico" title="Azul eléctrico" style="--muestra:#00a2ff"></button>
+          <button type="button" class="muestra-tema" data-elegir-tema="solar" aria-label="Amarillo solar" title="Amarillo solar" style="--muestra:#f4c430"></button>
+          <button type="button" class="muestra-tema" data-elegir-tema="rosa" aria-label="Rosa" title="Rosa" style="--muestra:#ce6496"></button>
         </div>
       </fieldset>
       <fieldset class="selector-modo">
@@ -94,7 +98,7 @@
       <button id="aceptar-item" type="button" class="boton peligro">Eliminar</button>
     </div>
   </dialog>
-  <script type="module" src="./js/tema.js?v=017"></script>
-  <script type="module" src="./js/app.js?v=017"></script>
+  <script type="module" src="./js/tema.js?v=019"></script>
+  <script type="module" src="./js/app.js?v=019"></script>
 </body>
 </html>

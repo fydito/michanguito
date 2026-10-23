@@ -83,7 +83,7 @@ Archivos separados por responsabilidad, encabezados descriptivos, funciones docu
 - Nuevo módulo `js/tema.js`, separado de la lógica de compras.
 - Actualización del Service Worker para incluir el módulo nuevo.
 
-## v0.1.7 — Corrección visual
+## v0.1.8 — Corrección visual
 
 - Modo noche completo hasta el fondo de la ventana.
 - Paletas oscuras individuales para los cuatro temas.
@@ -92,6 +92,23 @@ Archivos separados por responsabilidad, encabezados descriptivos, funciones docu
 - No se modifica la lógica ni el almacenamiento de las listas.
 
 
-## Versión 0.1.7 — Soft UI
+## Versión 0.1.8 — Soft UI
 
 Tarjetas elevadas para listas y productos, campos hundidos, mayor contraste y tildes sólidos al marcar. Se conservan los cuatro temas y los modos día/noche. Solo cambios visuales.
+
+
+## Versión 0.1.8 — Cantidades táctiles y tachado
+
+- Línea de tachado más gruesa y coloreada según tema.
+- Cantidad: botones − y +; el número conserva edición y teclado decimal.
+- Incremento 0,25 para kg/l/g; 1 para unidades y paquetes.
+- No se admiten cantidades negativas ni cero.
+
+## Versión 0.1.9 — Interfaz final antes del backend
+
+- Ocho colores: verde, azul, violeta, terracota, rojo rubí, azul eléctrico, amarillo solar y rosa.
+- Todos combinables con día y noche.
+- Cantidades siempre enteras (unidades comerciales), sin kg/l/paq en pantalla.
+- Controles − y + y edición directa con teclado numérico.
+- Tachado de productos marcados reforzado según el color del tema.
+- Mantiene IndexedDB y el resto del comportamiento local.
