@@ -82,3 +82,11 @@ Archivos separados por responsabilidad, encabezados descriptivos, funciones docu
 - Preferencias almacenadas localmente en `localStorage`.
 - Nuevo módulo `js/tema.js`, separado de la lógica de compras.
 - Actualización del Service Worker para incluir el módulo nuevo.
+
+## v0.1.6 — Corrección visual
+
+- Modo noche completo hasta el fondo de la ventana.
+- Paletas oscuras individuales para los cuatro temas.
+- Nombres de listas y productos con más peso y contraste.
+- Formularios con fondos entonados, bordes visibles y estados de foco.
+- No se modifica la lógica ni el almacenamiento de las listas.
