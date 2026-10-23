@@ -141,3 +141,126 @@ input:focus, select:focus, button:focus-visible { outline-color:var(--acento); }
 :root[data-modo="noche"] .cabecera .etiqueta { background:#0002; color:#141b1a; }
 :root[data-modo="noche"] .boton-icono { color:#141b1a; border-color:#0005; }
 :root[data-modo="noche"] .dialogo-config::backdrop { background:#000a; }
+
+
+/*
+ * Mi Changuito — v0.1.6 (23/10/2026)
+ * Corrección de superficie nocturna y jerarquía visual de los formularios.
+ * Las paletas semánticas mantienen la legibilidad en los ocho estilos.
+ */
+:root {
+  --acento-fuerte:#105b4c;
+  --resalte:#f0faf4;
+  --campo-borde:#9ebfb1;
+  --campo-foco:#e1f3e9;
+  --texto-item:#193b30;
+  --texto-campo:#193b30;
+  --cabecera-texto:#ffffff;
+}
+:root[data-tema="azul"] {
+  --acento-fuerte:#174d91;--resalte:#f0f6ff;--campo-borde:#9bb9e3;
+  --campo-foco:#e1edff;--texto-item:#193d72;--texto-campo:#173d71;
+}
+:root[data-tema="violeta"] {
+  --acento-fuerte:#59358d;--resalte:#f8f2ff;--campo-borde:#bea4dd;
+  --campo-foco:#f1e5ff;--texto-item:#4c2c79;--texto-campo:#4b2d76;
+}
+:root[data-tema="terracota"] {
+  --acento-fuerte:#843c28;--resalte:#fff4ed;--campo-borde:#d8ad9b;
+  --campo-foco:#ffeadf;--texto-item:#783a2a;--texto-campo:#763c2b;
+}
+:root[data-modo="noche"] {
+  --fondo:#101816;--superficie:#1b2723;--entrada:#263730;
+  --borde:#40574e;--texto:#f0f8f3;--texto-secundario:#bed2c5;
+  --acento-fuerte:#a5efd3;--resalte:#273e34;
+  --campo-borde:#688d7d;--campo-foco:#304f41;
+  --texto-item:#e4fff1;--texto-campo:#f4fff9;
+  --cabecera-texto:#101816;
+}
+:root[data-modo="noche"][data-tema="azul"] {
+  --fondo:#101722;--superficie:#1c293b;--entrada:#263951;--borde:#415978;
+  --texto:#f1f6ff;--texto-secundario:#c0d1eb;--resalte:#293c57;
+  --acento-fuerte:#c5ddff;--campo-borde:#698dbd;--campo-foco:#304c70;
+  --texto-item:#e0ecff;--texto-campo:#f5f9ff;
+}
+:root[data-modo="noche"][data-tema="violeta"] {
+  --fondo:#191321;--superficie:#291f36;--entrada:#382a4b;--borde:#5b4974;
+  --texto:#f9f3ff;--texto-secundario:#d9c7ed;--resalte:#3c2c50;
+  --acento-fuerte:#e1c9ff;--campo-borde:#9073b1;--campo-foco:#4b3864;
+  --texto-item:#f3e5ff;--texto-campo:#fff9ff;
+}
+:root[data-modo="noche"][data-tema="terracota"] {
+  --fondo:#201714;--superficie:#32231f;--entrada:#422f29;--borde:#73544a;
+  --texto:#fff5f0;--texto-secundario:#e8c9bb;--resalte:#49332b;
+  --acento-fuerte:#ffd1bd;--campo-borde:#a47a69;--campo-foco:#5c3c31;
+  --texto-item:#ffe8dc;--texto-campo:#fff9f5;
+}
+/* Fondo de toda la ventana, incluso por debajo de las tarjetas. */
+html {
+  min-height:100%;
+  background:var(--fondo)!important;
+  color:var(--texto);
+}
+body {
+  min-height:100vh;
+  min-height:100dvh;
+  margin:0;
+  background:var(--fondo)!important;
+  color:var(--texto);
+}
+main, .distribucion { background:transparent; }
+.cabecera { background:var(--acento);color:var(--cabecera-texto); }
+.cabecera h1 { color:var(--cabecera-texto);font-weight:800; }
+.cabecera .etiqueta { color:var(--cabecera-texto);background:#0000001b; }
+.boton-icono { color:var(--cabecera-texto);border-color:currentColor; }
+:root[data-modo="noche"] .cabecera,
+:root[data-modo="noche"] .cabecera h1,
+:root[data-modo="noche"] .cabecera .etiqueta,
+:root[data-modo="noche"] .boton-icono { color:var(--cabecera-texto); }
+.panel, .dialogo-config { background:var(--superficie);color:var(--texto);border:1px solid var(--borde); }
+h2, h3 { color:var(--texto);font-weight:800; }
+.lista-enlace {
+  background:var(--superficie);color:var(--texto-item);
+  border:1px solid var(--campo-borde);
+  font-weight:800;font-size:1rem;
+  transition:background .15s,border-color .15s;
+}
+.lista-enlace.activa { background:var(--resalte);border:2px solid var(--acento); }
+.lista-enlace small { color:var(--texto-secundario);font-size:.78rem;font-weight:600; }
+.lista-enlace.activa small { color:var(--texto);opacity:.82; }
+.item.item-compacto { background:var(--superficie);border-color:var(--borde); }
+.item-compacto .nombre-producto {
+  color:var(--texto-item);font-weight:800;letter-spacing:.005em;
+}
+.item-compacto.comprado .nombre-producto { color:var(--texto-secundario);opacity:.85; }
+/* Formularios: fondos entonados, texto fuerte y foco reconocible. */
+.form-grid label, .form-producto label, .campo-item,
+.dialogo-config label { color:var(--texto);font-weight:700; }
+.form-grid input, .form-grid select,
+.form-producto input, .form-producto select,
+.campo-item input, .dialogo-config select {
+  background:var(--entrada);
+  color:var(--texto-campo);
+  border:1.5px solid var(--campo-borde);
+  border-radius:9px;
+  font-weight:650;
+  box-shadow:inset 0 1px 2px #0000000a;
+}
+input::placeholder { color:var(--texto-secundario);opacity:.88;font-weight:450; }
+.form-grid input:focus, .form-grid select:focus,
+.form-producto input:focus, .form-producto select:focus,
+.campo-item input:focus {
+  background:var(--campo-foco);
+  outline:2px solid var(--acento);
+  outline-offset:1px;
+  border-color:var(--acento);
+}
+.form-grid select option, .form-producto select option { background:var(--entrada);color:var(--texto); }
+.boton.secundario { background:var(--resalte);color:var(--acento-fuerte);border-color:var(--campo-borde); }
+:root[data-modo="noche"] .boton.secundario { color:var(--texto-item); }
+:root[data-modo="noche"] .boton.peligro { background:var(--superficie);color:#ffa69e;border-color:#d7817a; }
+:root[data-modo="noche"] .boton:not(.secundario):not(.peligro) { color:var(--cabecera-texto); }
+.totales { background:var(--resalte);border:1px solid var(--borde);color:var(--texto); }
+.totales strong, .importe { color:var(--texto-item);font-weight:800; }
+.item-compacto .marcar.marcado { background:var(--resalte);color:var(--acento-fuerte);border-color:var(--acento); }
+:root[data-modo="noche"] .item-compacto .marcar.marcado { color:var(--texto-item); }
