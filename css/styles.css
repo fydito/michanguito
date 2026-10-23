@@ -492,3 +492,11 @@ input::placeholder { color:var(--texto-secundario);opacity:.88;font-weight:450; 
 .colores-tema {display:grid;grid-template-columns:repeat(4,36px);gap:14px 17px;}
 /* Botones de cantidad táctiles, con el número editable en el centro. */
 .campo-cantidad .paso-cantidad {touch-action:manipulation;}
+
+
+/* v0.1.10: identidad visual Changui en la cabecera, adaptable a móvil. */
+.cabecera h1 { display:flex; align-items:center; gap:.45rem; }
+.changui-cabecera { width:36px; height:36px; object-fit:contain; flex-shrink:0; }
+@media (max-width:480px) {
+  .changui-cabecera { width:29px; height:29px; }
+}
