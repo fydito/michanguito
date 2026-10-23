@@ -31,3 +31,46 @@
 .item{align-items:flex-start}
 .item>.numero,.item>input[type=checkbox],.item>.importe,.item>.quitar{margin-top:.2rem}
 @media(max-width:520px){.item{gap:.45rem;padding:.6rem}.campo-item{flex-basis:100px}.edicion-item{gap:.4rem}.importe{max-width:76px;white-space:normal;text-align:right}.form-producto .form-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}}
+
+/*
+ * Versión 0.1.4: renglones compactos, acciones seguras y preferencias.
+ * En pantallas estrechas se prioriza conservar la fila sin desplazamiento.
+ */
+.item.item-compacto {
+  display: grid;
+  grid-template-columns: 20px minmax(65px,1fr) 105px 120px 36px 46px;
+  align-items: center;
+  gap: .45rem;
+  padding: .45rem .55rem;
+  min-height: 56px;
+}
+.item-compacto .numero { min-width: 0; }
+.item-compacto .nombre-producto { font-size: .9rem; overflow-wrap: anywhere; }
+.item-compacto.comprado .nombre-producto { text-decoration: line-through; color: #819187; }
+.item-compacto .campo-item { min-width: 0; max-width: none; margin: 0; font-size: .7rem; }
+.item-compacto .campo-item input { width: 100%; padding: .4rem; font-size: .85rem; }
+.item-compacto .quitar { margin: 0; min-height: 42px; font-size: 1.5rem; }
+.item-compacto .marcar {
+  border: 1px solid #a8c9ba; border-radius: 9px; background: #f3f7f5;
+  color: #899d93; font-size: 1.3rem; font-weight: 800;
+  min-width: 42px; min-height: 44px; cursor: pointer;
+}
+.item-compacto .marcar.marcado { background: #dbf6e6; color: #137c43; border-color: #40a66d; }
+.opcion-config { display: flex; align-items: center; gap: .7rem; padding: .55rem 0; }
+.opcion-config input { width: 19px; height: 19px; flex: 0 0 19px; accent-color: #147d66; }
+.deshacer-aviso {
+  position: fixed; z-index: 20; bottom: 1rem; left: 50%; transform: translateX(-50%);
+  background: #20352f; color: #fff; border-radius: 12px; padding: .65rem 1rem;
+  display: flex; align-items: center; gap: 1rem; box-shadow: 0 8px 24px #0003;
+}
+@media (max-width: 600px) {
+  .item.item-compacto {
+    grid-template-columns: 15px minmax(55px,1fr) 57px 70px 29px 40px;
+    gap: .25rem; padding: .4rem .25rem;
+  }
+  .item-compacto .nombre-producto { font-size: .78rem; }
+  .item-compacto .campo-item { font-size: .61rem; }
+  .item-compacto .campo-item input { padding: .35rem .2rem; font-size: .78rem; }
+  .item-compacto .quitar { padding: 0; font-size: 1.3rem; }
+  .item-compacto .marcar { min-width: 36px; min-height: 44px; }
+}
