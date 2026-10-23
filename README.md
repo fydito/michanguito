@@ -83,10 +83,15 @@ Archivos separados por responsabilidad, encabezados descriptivos, funciones docu
 - Nuevo módulo `js/tema.js`, separado de la lógica de compras.
 - Actualización del Service Worker para incluir el módulo nuevo.
 
-## v0.1.6 — Corrección visual
+## v0.1.7 — Corrección visual
 
 - Modo noche completo hasta el fondo de la ventana.
 - Paletas oscuras individuales para los cuatro temas.
 - Nombres de listas y productos con más peso y contraste.
 - Formularios con fondos entonados, bordes visibles y estados de foco.
 - No se modifica la lógica ni el almacenamiento de las listas.
+
+
+## Versión 0.1.7 — Soft UI
+
+Tarjetas elevadas para listas y productos, campos hundidos, mayor contraste y tildes sólidos al marcar. Se conservan los cuatro temas y los modos día/noche. Solo cambios visuales.
