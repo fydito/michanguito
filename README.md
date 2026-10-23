@@ -73,3 +73,12 @@ Archivos separados por responsabilidad, encabezados descriptivos, funciones docu
 - Configuración: deshacer eliminación durante 5 segundos (activo por defecto).
 - Preferencias locales en `localStorage`; las listas continúan en IndexedDB.
 - Se conservan importación/exportación JSON y los catálogos anteriores.
+
+## Versión 0.1.5 — Temas de apariencia
+
+- Cuatro colores: verde, azul, violeta y terracota.
+- Modos día y noche, combinables con cualquiera de los colores.
+- Selector disponible únicamente desde el engranaje de configuración.
+- Preferencias almacenadas localmente en `localStorage`.
+- Nuevo módulo `js/tema.js`, separado de la lógica de compras.
+- Actualización del Service Worker para incluir el módulo nuevo.
