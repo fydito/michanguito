@@ -112,3 +112,11 @@ Tarjetas elevadas para listas y productos, campos hundidos, mayor contraste y ti
 - Controles − y + y edición directa con teclado numérico.
 - Tachado de productos marcados reforzado según el color del tema.
 - Mantiene IndexedDB y el resto del comportamiento local.
+
+## Versión 0.1.10 — Changui como identidad visual
+- Changui reemplaza el emoji del carrito en la cabecera.
+- Favicon PNG para pestañas del navegador.
+- Iconos PWA 192/512 PNG y variantes maskable para Android.
+- Icono Apple Touch 180 PNG.
+- Service Worker con caché renovada para todos los iconos.
+- No se modificó la lógica de las listas ni los catálogos.

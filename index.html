@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   Proyecto: Mi Changuito | Archivo: index.html
-  Autor: Jordan Molinari | Versión: 0.1.8 | Fecha: 22/10/2026
+  Autor: Jordan Molinari | Versión: 0.1.10 | Fecha: 22/10/2026
   Descripción: Estructura semántica de la aplicación de listas de compras.
 -->
 <html lang="es-AR">
@@ -11,12 +11,13 @@
   <meta name="theme-color" content="#147d66">
   <meta name="description" content="Listas de compras simples y organizadas, incluso sin conexión.">
   <link rel="manifest" href="./manifest.json">
-  <link rel="icon" href="./img/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./css/styles.css?v=019">
+  <link rel="icon" href="./img/changui-favicon-64.png" type="image/png" sizes="64x64">
+  <link rel="apple-touch-icon" href="./img/changui-apple-180.png" sizes="180x180">
+  <link rel="stylesheet" href="./css/styles.css?v=0110">
   <title>Mi Changuito</title>
 </head>
 <body>
-  <header class="cabecera"><div class="contenedor cabecera-interior"><h1>🛒 Mi Changuito</h1><div class="cabecera-acciones"><span class="etiqueta">Modo local · v0.1.9</span><button id="abrir-config" class="boton-icono" type="button" aria-label="Configuración" title="Configuración">⚙</button></div></div></header>
+  <header class="cabecera"><div class="contenedor cabecera-interior"><h1><img class="changui-cabecera" src="./img/changui-favicon-64.png" alt="" width="36" height="36"> Mi Changuito</h1><div class="cabecera-acciones"><span class="etiqueta">Modo local · v0.1.10</span><button id="abrir-config" class="boton-icono" type="button" aria-label="Configuración" title="Configuración">⚙</button></div></div></header>
   <main class="contenedor distribucion">
     <section id="pantalla-inicio" class="panel" aria-label="Mis listas">
       <div class="fila entre"><h2>Mis listas</h2><button id="nueva-lista" class="boton pequeno" type="button">+ Nueva lista</button></div>
@@ -98,7 +99,7 @@
       <button id="aceptar-item" type="button" class="boton peligro">Eliminar</button>
     </div>
   </dialog>
-  <script type="module" src="./js/tema.js?v=019"></script>
-  <script type="module" src="./js/app.js?v=019"></script>
+  <script type="module" src="./js/tema.js?v=0110"></script>
+  <script type="module" src="./js/app.js?v=0110"></script>
 </body>
 </html>
