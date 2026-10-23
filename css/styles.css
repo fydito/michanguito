@@ -373,3 +373,122 @@ input::placeholder { color:var(--texto-secundario);opacity:.88;font-weight:450; 
 @media(prefers-reduced-motion:reduce){
   .lista-enlace,.item.item-compacto,.item-compacto .marcar {transition:none;}
 }
+
+/*
+ * Mi Changuito v0.1.8: tachado visible y control táctil de cantidades.
+ * Se conservan las tarjetas Soft UI y los ocho esquemas de apariencia.
+ */
+.item-compacto.comprado .nombre-producto {
+  color:var(--texto-item);
+  opacity:.8;
+  text-decoration-line:line-through;
+  text-decoration-color:var(--acento-fuerte);
+  text-decoration-thickness:3px;
+  text-decoration-skip-ink:none;
+}
+/* Una línea de contraste adicional en noche evita el tachado invisible. */
+:root[data-modo="noche"] .item-compacto.comprado .nombre-producto {
+  text-decoration-color:var(--acento);
+  text-decoration-thickness:3px;
+}
+.item.item-compacto {
+  grid-template-columns:20px minmax(65px,1fr) 124px 95px 32px 46px;
+}
+.campo-cantidad .control-cantidad {
+  display:flex; align-items:stretch; min-width:0; height:40px;
+  border:1px solid var(--campo-borde); border-radius:11px;
+  background:var(--campo-soft);
+  box-shadow:inset 2px 2px 5px var(--soft-sombra);
+  overflow:hidden;
+}
+.item-compacto .campo-cantidad .control-cantidad input {
+  flex:1; width:1px; min-width:0; text-align:center;
+  padding:0 2px; border:0; border-radius:0;
+  box-shadow:none; background:transparent;
+  appearance:textfield; -moz-appearance:textfield;
+}
+.campo-cantidad input::-webkit-inner-spin-button,
+.campo-cantidad input::-webkit-outer-spin-button { -webkit-appearance:none; margin:0; }
+.paso-cantidad {
+  flex:0 0 28px; border:0; padding:0;
+  color:var(--acento-fuerte); background:var(--resalte);
+  font-weight:900; font-size:1.2rem; cursor:pointer;
+  touch-action:manipulation;
+}
+.paso-cantidad:first-child { border-right:1px solid var(--campo-borde); }
+.paso-cantidad:last-child { border-left:1px solid var(--campo-borde); }
+.paso-cantidad:active { background:var(--acento-suave); }
+.paso-cantidad:focus-visible { outline:2px solid var(--acento); outline-offset:-2px; }
+@media(max-width:600px) {
+  .item.item-compacto {
+    grid-template-columns:15px minmax(48px,1fr) 105px 58px 23px 39px;
+    gap:.22rem; padding:.4rem .25rem;
+  }
+  .campo-cantidad .control-cantidad { height:38px; }
+  .paso-cantidad { flex-basis:25px; font-size:1.1rem; }
+  .item-compacto .campo-cantidad .control-cantidad input { font-size:.78rem; }
+}
+@media(max-width:355px) {
+  .item.item-compacto { grid-template-columns:13px minmax(39px,1fr) 99px 52px 21px 36px; gap:.15rem; }
+  .paso-cantidad { flex-basis:23px; }
+}
+
+/*
+ * Mi Changuito v0.1.9 — ocho temas realmente diferentes, día y noche.
+ * Cantidades expresadas en unidades comerciales; no se muestran kg ni litros.
+ */
+:root[data-tema="rubi"] {
+  --acento:#c62842;--acento-fuerte:#94172d;--acento-suave:#ffe9ed;
+  --resalte:#fff0f2;--campo-borde:#e3a1ad;--campo-foco:#ffe0e6;
+  --texto-item:#7c1a2e;--texto-campo:#7c1a2e;
+}
+:root[data-tema="electrico"] {
+  --acento:#00a2ff;--acento-fuerte:#006aab;--acento-suave:#e4f6ff;
+  --resalte:#eaf8ff;--campo-borde:#86c9ed;--campo-foco:#d6f1ff;
+  --texto-item:#075b8c;--texto-campo:#075b8c;
+}
+:root[data-tema="solar"] {
+  --acento:#f4c430;--acento-fuerte:#775500;--acento-suave:#fff7d9;
+  --resalte:#fff9e8;--campo-borde:#d8b95a;--campo-foco:#fff1bf;
+  --texto-item:#634a08;--texto-campo:#634a08;
+}
+:root[data-tema="rosa"] {
+  --acento:#ce6496;--acento-fuerte:#8b2c5a;--acento-suave:#ffebf5;
+  --resalte:#fff0f7;--campo-borde:#e2a2c0;--campo-foco:#ffe1ef;
+  --texto-item:#7c2c52;--texto-campo:#7c2c52;
+}
+:root[data-modo="noche"][data-tema="rubi"] {
+  --fondo:#1c1217;--superficie:#302029;--entrada:#442b38;--borde:#704758;
+  --texto:#fff2f5;--texto-secundario:#e4beca;--acento:#ff6684;
+  --acento-fuerte:#ffc3d1;--acento-suave:#4c2a38;--resalte:#492c39;
+  --campo-borde:#ad7185;--campo-foco:#63394a;--texto-item:#ffe3eb;--texto-campo:#fff8fa;
+}
+:root[data-modo="noche"][data-tema="electrico"] {
+  --fondo:#0e1823;--superficie:#192d40;--entrada:#253f58;--borde:#426582;
+  --texto:#eaf8ff;--texto-secundario:#b8d9ec;--acento:#4cc0ff;
+  --acento-fuerte:#bceaff;--acento-suave:#274a65;--resalte:#25435c;
+  --campo-borde:#6e9fc2;--campo-foco:#315776;--texto-item:#dff5ff;--texto-campo:#f4fcff;
+}
+:root[data-modo="noche"][data-tema="solar"] {
+  --fondo:#1c1910;--superficie:#302a1b;--entrada:#443a24;--borde:#73613b;
+  --texto:#fff8df;--texto-secundario:#e0d1a3;--acento:#ffd34d;
+  --acento-fuerte:#ffe9a0;--acento-suave:#4a3d22;--resalte:#453a25;
+  --campo-borde:#a28a51;--campo-foco:#5b4b2a;--texto-item:#fff1be;--texto-campo:#fffaf0;
+}
+:root[data-modo="noche"][data-tema="rosa"] {
+  --fondo:#21151e;--superficie:#362335;--entrada:#4b3048;--borde:#76506f;
+  --texto:#fff2fb;--texto-secundario:#e5c5df;--acento:#f49ac5;
+  --acento-fuerte:#ffd4eb;--acento-suave:#50314b;--resalte:#4a3045;
+  --campo-borde:#ad7da2;--campo-foco:#603b58;--texto-item:#ffe2f2;--texto-campo:#fff7fc;
+}
+/* El amarillo solar requiere texto oscuro sobre fondos claros. */
+:root[data-tema="solar"][data-modo="dia"] .cabecera,
+:root[data-tema="solar"][data-modo="dia"] .boton:not(.secundario):not(.peligro),
+:root[data-tema="solar"][data-modo="dia"] .item-compacto .marcar.marcado {
+  color:#392b07;
+}
+:root[data-tema="solar"][data-modo="dia"] .cabecera .etiqueta {color:#392b07;}
+/* Ocho muestras distribuidas en dos filas sin comprimir los controles. */
+.colores-tema {display:grid;grid-template-columns:repeat(4,36px);gap:14px 17px;}
+/* Botones de cantidad táctiles, con el número editable en el centro. */
+.campo-cantidad .paso-cantidad {touch-action:manipulation;}
