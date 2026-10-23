@@ -74,3 +74,70 @@
   .item-compacto .quitar { padding: 0; font-size: 1.3rem; }
   .item-compacto .marcar { min-width: 36px; min-height: 44px; }
 }
+
+/*
+ * Proyecto: Mi Changuito | Archivo: styles.css
+ * Versión 0.1.5 - Apariencia configurable.
+ * Las variables semánticas evitan duplicar las hojas de estilo por tema.
+ */
+:root {
+  --acento: #147d66;
+  --acento-suave: #e8f6ef;
+  --fondo: #f1f5f3;
+  --superficie: #fff;
+  --texto: #20352f;
+  --texto-secundario: #60736b;
+  --borde: #dce8e1;
+  --entrada: #fff;
+  --barra: #20352f;
+  color-scheme: light;
+}
+:root[data-tema="azul"] { --acento:#2864ba; --acento-suave:#e8f0ff; }
+:root[data-tema="violeta"] { --acento:#7750a6; --acento-suave:#f2eaff; }
+:root[data-tema="terracota"] { --acento:#ad593b; --acento-suave:#fff0e7; }
+:root[data-modo="noche"] {
+  --fondo:#141b1a; --superficie:#202a28; --texto:#edf5f1;
+  --texto-secundario:#afc0b9; --borde:#3c504a; --entrada:#26332f;
+  --acento-suave:#30443e; --barra:#0e1613;
+  color-scheme: dark;
+}
+:root[data-modo="noche"][data-tema="azul"] { --acento:#76aaff; --acento-suave:#273b57; }
+:root[data-modo="noche"][data-tema="violeta"] { --acento:#c1a0f2; --acento-suave:#3d3050; }
+:root[data-modo="noche"][data-tema="terracota"] { --acento:#f2a080; --acento-suave:#49352e; }
+:root[data-modo="noche"][data-tema="verde"] { --acento:#6bd6b2; --acento-suave:#25483d; }
+
+html, body { background:var(--fondo); color:var(--texto); }
+.cabecera { background:var(--acento); color:var(--fondo); }
+:root[data-modo="noche"] .cabecera { color:#141b1a; }
+.panel, .dialogo-config, .lista-enlace { background:var(--superficie); color:var(--texto); border-color:var(--borde); }
+.dialogo-config { color:var(--texto); }
+.lista-enlace.activa, .totales { background:var(--acento-suave); border-color:var(--acento); }
+.boton { background:var(--acento); border-color:var(--acento); color:var(--fondo); }
+:root[data-modo="noche"] .boton:not(.secundario):not(.peligro) { color:#121c19; }
+.boton.secundario { background:var(--superficie); color:var(--acento); }
+.boton.peligro { background:var(--superficie); color:#cb554b; border-color:#cb554b; }
+input, select { background:var(--entrada); color:var(--texto); border-color:var(--borde); }
+input:focus, select:focus, button:focus-visible { outline-color:var(--acento); }
+.item { border-color:var(--borde); }
+.item-compacto .marcar { background:var(--entrada); color:var(--texto-secundario); border-color:var(--borde); }
+.item-compacto .marcar.marcado { background:var(--acento-suave); color:var(--acento); border-color:var(--acento); }
+.numero, .ayuda, .vacio, .campo-item, .totales small, .lista-enlace small, .item .descripcion small { color:var(--texto-secundario); }
+.etiqueta { background:var(--acento-suave); color:var(--texto); }
+.form-producto, .subtitulo, hr { border-color:var(--borde); }
+.mensaje, .deshacer-aviso { background:var(--barra); color:#fff; }
+.opcion-config input { accent-color:var(--acento); }
+.selector-temas, .selector-modo { border:0; padding:0; margin:.6rem 0 1rem; min-width:0; }
+.selector-temas legend, .selector-modo legend { font-size:.86rem; font-weight:600; padding:0 0 .5rem; }
+.colores-tema { display:flex; gap:.8rem; align-items:center; }
+.muestra-tema {
+  background:var(--muestra); width:36px; height:36px; border-radius:50%;
+  border:3px solid var(--superficie); outline:2px solid transparent;
+  box-shadow:0 0 0 1px var(--borde); cursor:pointer;
+}
+.muestra-tema.seleccionado { outline-color:var(--texto); outline-offset:2px; }
+.opciones-modo { display:flex; gap:1rem; flex-wrap:wrap; }
+.opciones-modo label { display:flex; align-items:center; gap:.45rem; cursor:pointer; }
+.opciones-modo input { width:18px; height:18px; accent-color:var(--acento); }
+:root[data-modo="noche"] .cabecera .etiqueta { background:#0002; color:#141b1a; }
+:root[data-modo="noche"] .boton-icono { color:#141b1a; border-color:#0005; }
+:root[data-modo="noche"] .dialogo-config::backdrop { background:#000a; }
