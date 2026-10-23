@@ -2,15 +2,15 @@
  * Proyecto: Mi Changuito
  * Archivo: tema.js
  * Autor: Jordan Molinari
- * Versión: 0.1.5 | Fecha: 22/10/2026
+ * Versión: 0.1.9 | Fecha: 22/10/2026
  *
  * Descripción:
- * Administra cuatro colores y modos día/noche.
+ * Administra ocho colores y modos día/noche.
  * La elección se conserva en localStorage y se aplica a todas las pantallas.
  */
 
 const CLAVE = 'mi-changuito-apariencia';
-const COLORES = ['verde', 'azul', 'violeta', 'terracota'];
+const COLORES = ['verde', 'azul', 'violeta', 'terracota', 'rubi', 'electrico', 'solar', 'rosa'];
 const MODOS = ['dia', 'noche'];
 const INICIAL = { tema: 'verde', modo: 'dia' };
 
@@ -48,7 +48,8 @@ function aplicarApariencia(apariencia) {
   });
   const coloresBarra = {
     verde: '#147d66', azul: '#2864ba',
-    violeta: '#7750a6', terracota: '#ad593b'
+    violeta: '#7750a6', terracota: '#ad593b',
+    rubi: '#c62842', electrico: '#00a2ff', solar: '#f4c430', rosa: '#ce6496'
   };
   document.querySelector('meta[name="theme-color"]')
     ?.setAttribute('content', apariencia.modo === 'noche' ? '#17201f' : coloresBarra[apariencia.tema]);

@@ -1,6 +1,6 @@
 /**
  * Proyecto: Mi Changuito | Archivo: app.js
- * Autor: Jordan Molinari | Versión: 0.1.4 | Fecha: 22/10/2026
+ * Autor: Jordan Molinari | Versión: 0.1.9 | Fecha: 22/10/2026
  * Descripción: Controlador principal de la interfaz y eventos del modo local.
  */
 import { obtenerTodos, guardar, eliminar } from './storage.js';
@@ -184,6 +184,66 @@ function crearCampoNumerico(item, propiedad, etiqueta, opciones = {}) {
   campo.append(entrada);
   return campo;
 }
+/**
+ * Crea controles - / número editable / + sin sacrificar el teclado numérico.
+ * Todas las cantidades representan unidades comerciales enteras.
+ * No admite cantidades menores al mínimo ni duplica guardados al pulsar.
+ */
+function crearControlCantidad(item) {
+  const campo = document.createElement('div');
+  campo.className = 'campo-item campo-cantidad';
+  campo.append(nodo('span', 'Cant.')); 
+  const grupo = nodo('div', '', 'control-cantidad');
+  const entrada = document.createElement('input');
+  entrada.type = 'number';
+  entrada.inputMode = 'numeric';
+  entrada.min = '1';
+  entrada.step = '1';
+  entrada.setAttribute('aria-label', `Cantidad de ${item.nombre} en unidades comerciales`);
+  entrada.value = String(item.cantidad);
+  const paso = 1;
+  const minimo = 1;
+  let enGuardado = false;
+  async function guardarCantidad(valor) {
+    if (enGuardado) return;
+    if (!Number.isSafeInteger(valor) || valor < minimo) {
+      entrada.value = String(item.cantidad);
+      avisar('Ingresá una cantidad válida.');
+      return;
+    }
+    enGuardado = true;
+    try {
+      item.cantidad = valor;
+      entrada.value = String(item.cantidad);
+      await persistir();
+    } catch (error) {
+      avisar('No se pudo guardar la cantidad.');
+      console.error(error);
+    } finally { enGuardado = false; }
+  }
+  entrada.addEventListener('change', () => {
+    if (entrada.value.trim() === '') {
+      entrada.value = String(item.cantidad);
+      return;
+    }
+    guardarCantidad(Number(entrada.value));
+  });
+  function botonCantidad(simbolo, direccion) {
+    const boton = nodo('button', simbolo, 'paso-cantidad');
+    boton.type = 'button';
+    boton.setAttribute('aria-label', `${direccion > 0 ? 'Aumentar' : 'Disminuir'} cantidad de ${item.nombre}`);
+    boton.addEventListener('click', () => {
+      const base = Number.isFinite(Number(entrada.value)) && entrada.value !== '' ? Number(entrada.value) : item.cantidad;
+      const siguiente = base + direccion * paso;
+      if (siguiente < minimo) return;
+      guardarCantidad(siguiente);
+    });
+    return boton;
+  }
+  grupo.append(botonCantidad('−', -1), entrada, botonCantidad('+', 1));
+  campo.append(grupo);
+  return campo;
+}
 /** Presenta cada producto en una sola línea, con el tilde al extremo derecho. */
 function renderizarItems() {
   const contenedor = $('productos-lista');
@@ -199,7 +259,7 @@ function renderizarItems() {
     fila.append(nombre);
 
     // Cantidad y precio se editan directamente en el renglón.
-    fila.append(crearCampoNumerico(item, 'cantidad', `Cant. (${item.unidad})`, { min: 0.001 }));
+    fila.append(crearControlCantidad(item));
     fila.append(crearCampoNumerico(item, 'precio', 'Precio ($)', { min: 0, placeholder: '—' }));
 
     const quitar = nodo('button', '×', 'quitar');
@@ -225,7 +285,7 @@ function renderizarItems() {
   const totales = calcularTotales(activa.items);
   $('total').textContent = moneda(totales.total);
   $('renglones').textContent = totales.renglones;
-  $('cantidad-total').textContent = Number(totales.cantidad.toFixed(3)).toLocaleString('es-AR');
+  $('cantidad-total').textContent = totales.cantidad.toLocaleString('es-AR');
   $('marcados').textContent = totales.marcados;
   $('avance').textContent = `${totales.marcados} de ${totales.renglones} marcados`;
 }
