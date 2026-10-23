@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   Proyecto: Mi Changuito | Archivo: index.html
-  Autor: Jordan Molinari | Versión: 0.1.3 | Fecha: 22/10/2026
+  Autor: Jordan Molinari | Versión: 0.1.4 | Fecha: 22/10/2026
   Descripción: Estructura semántica de la aplicación de listas de compras.
 -->
 <html lang="es-AR">
@@ -12,17 +12,23 @@
   <meta name="description" content="Listas de compras simples y organizadas, incluso sin conexión.">
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" href="./img/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./css/styles.css?v=013">
+  <link rel="stylesheet" href="./css/styles.css?v=014">
   <title>Mi Changuito</title>
 </head>
 <body>
-  <header class="cabecera"><div class="contenedor cabecera-interior"><h1>🛒 Mi Changuito</h1><div class="cabecera-acciones"><span class="etiqueta">Modo local · v0.1.3</span><button id="abrir-config" class="boton-icono" type="button" aria-label="Configuración" title="Configuración">⚙</button></div></div></header>
+  <header class="cabecera"><div class="contenedor cabecera-interior"><h1>🛒 Mi Changuito</h1><div class="cabecera-acciones"><span class="etiqueta">Modo local · v0.1.4</span><button id="abrir-config" class="boton-icono" type="button" aria-label="Configuración" title="Configuración">⚙</button></div></div></header>
   <main class="contenedor distribucion">
     <section id="pantalla-inicio" class="panel" aria-label="Mis listas">
       <div class="fila entre"><h2>Mis listas</h2><button id="nueva-lista" class="boton pequeno" type="button">+ Nueva lista</button></div>
       <div id="listado-listas" class="listado-listas"></div>
     </section>
     <dialog id="panel-config" class="dialogo-config" aria-label="Configuración"><div class="fila entre"><h2>Configuración</h2><button id="cerrar-config" class="boton pequeno secundario" type="button">Cerrar ×</button></div>
+      <h3>Comportamiento de la lista</h3>
+      <label class="opcion-config"><input id="confirmar-borrado" type="checkbox" checked>
+        <span>Confirmar antes de eliminar productos</span></label>
+      <label class="opcion-config"><input id="permitir-deshacer" type="checkbox" checked>
+        <span>Permitir deshacer durante 5 segundos</span></label>
+      <p class="ayuda">Los productos marcados permanecen en su lugar.</p>
       <h3>Datos y catálogos</h3>
       <div class="acciones-verticales">
         <button id="exportar-listas" class="boton secundario" type="button">Exportar listas JSON</button>
@@ -59,6 +65,18 @@
     </section>
   </main>
   <div id="mensaje" class="mensaje" role="status" aria-live="polite"></div>
-  <script type="module" src="./js/app.js?v=013"></script>
+  <div id="deshacer-aviso" class="deshacer-aviso" role="status" aria-live="polite" hidden>
+    <span id="deshacer-texto">Producto eliminado.</span>
+    <button id="deshacer-boton" type="button" class="boton pequeno secundario">Deshacer</button>
+  </div>
+  <dialog id="confirmar-item" class="dialogo-config" aria-labelledby="confirmar-item-titulo">
+    <h2 id="confirmar-item-titulo">Eliminar producto</h2>
+    <p id="confirmar-item-texto"></p>
+    <div class="fila entre">
+      <button id="cancelar-item" type="button" class="boton secundario">Cancelar</button>
+      <button id="aceptar-item" type="button" class="boton peligro">Eliminar</button>
+    </div>
+  </dialog>
+  <script type="module" src="./js/app.js?v=014"></script>
 </body>
 </html>

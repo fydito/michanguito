@@ -63,3 +63,13 @@ Archivos separados por responsabilidad, encabezados descriptivos, funciones docu
 - Pantalla de inicio con listas; editor independiente y navegación Volver.
 - Configuración accesible únicamente desde el engranaje superior.
 - Se actualizó el identificador de caché para evitar mostrar versiones anteriores.
+
+
+## Versión 0.1.4 — Renglones y eliminación segura
+
+- Productos en un solo renglón: número, nombre, cantidad, precio, eliminar y marcar.
+- El tilde de comprado se ubica siempre al extremo derecho y no reordena productos.
+- Configuración: confirmar antes de borrar (activo por defecto).
+- Configuración: deshacer eliminación durante 5 segundos (activo por defecto).
+- Preferencias locales en `localStorage`; las listas continúan en IndexedDB.
+- Se conservan importación/exportación JSON y los catálogos anteriores.
