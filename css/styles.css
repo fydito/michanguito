@@ -500,3 +500,13 @@ input::placeholder { color:var(--texto-secundario);opacity:.88;font-weight:450; 
 @media (max-width:480px) {
   .changui-cabecera { width:29px; height:29px; }
 }
+
+/* v0.1.12 — Selección múltiple del catálogo; acciones siempre a la vista. */
+.catalogo-cabecera{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-top:1rem;font-size:.88rem;font-weight:700}
+.catalogo-seleccion{height:min(46vh,370px);overflow-y:auto;overscroll-behavior:contain;border:1px solid var(--borde,#cbd9d1);border-radius:12px;margin-top:.55rem;background:var(--entrada,#fff)}
+.catalogo-opcion{display:flex!important;flex-direction:row;align-items:center;gap:.75rem;padding:.75rem .85rem;border-bottom:1px solid var(--borde,#e7eeea);font-size:.92rem;cursor:pointer;font-weight:500!important}
+.catalogo-opcion:last-child{border-bottom:0}.catalogo-opcion:has(input:checked){background:var(--superficie-secundaria,#e8f6ef)}
+.catalogo-opcion input,.catalogo-otro input{width:20px!important;height:20px;flex-shrink:0;accent-color:var(--primario,#147d66)}
+.catalogo-otro{display:flex!important;flex-direction:row;align-items:center;gap:.65rem;margin-top:.85rem}
+.catalogo-acciones{position:sticky;bottom:0;z-index:3;display:flex;align-items:center;gap:.85rem;padding:.7rem 0;background:var(--tarjeta,var(--fondo,#fff));border-top:1px solid var(--borde,#e7eeea)}
+.catalogo-acciones .boton{margin-top:0!important;min-width:135px}.catalogo-acciones span{font-size:.82rem;opacity:.8}
