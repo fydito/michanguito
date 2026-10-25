@@ -140,22 +140,41 @@ function renderizarCategorias() {
   }
   if ([...selector.options].some(opcion => opcion.value === anterior)) selector.value = anterior;
 }
-/** Ofrece el catálogo elegido y una opción final para un producto libre. */
+/** Catálogo alfabético con selección múltiple temporal (no refleja compras previas). */
 function renderizarCatalogo() {
-  const selector = $('producto-catalogo');
-  selector.replaceChildren();
-  selector.add(new Option('Seleccionar producto', ''));
+  const contenedor = $('producto-catalogo');
+  contenedor.replaceChildren();
   const catalogo = catalogos.find(c => c.categoria === $('categoria').value);
-  for (const producto of catalogo?.productos ?? []) selector.add(new Option(producto.nombre, producto.id));
-  selector.add(new Option('Otro...', '__otro__'));
+  const productos = [...(catalogo?.productos ?? [])].sort((a,b)=>a.nombre.localeCompare(b.nombre,'es',{sensitivity:'base'}));
+  for (const producto of productos) {
+    const etiqueta = document.createElement('label');
+    etiqueta.className = 'catalogo-opcion';
+    const casilla = document.createElement('input');
+    casilla.type = 'checkbox'; casilla.value = producto.id;
+    casilla.addEventListener('change', actualizarSeleccion);
+    etiqueta.append(casilla, document.createTextNode(producto.nombre));
+    contenedor.append(etiqueta);
+  }
+  $('incluir-otro').checked = false;
+  $('producto-libre').value = '';
   mostrarCampoOtro();
+  actualizarSeleccion();
 }
-/** El nombre manual solo aparece al elegir «Otro». */
 function mostrarCampoOtro() {
-  const esOtro = $('producto-catalogo').value === '__otro__';
-  $('grupo-producto-otro').hidden = !esOtro;
-  $('producto-libre').required = esOtro;
-  if (!esOtro) $('producto-libre').value = '';
+  const otro = $('incluir-otro').checked;
+  $('grupo-producto-otro').hidden = !otro;
+  $('producto-libre').required = otro;
+  if (!otro) $('producto-libre').value = '';
+  actualizarSeleccion();
+}
+function actualizarSeleccion() {
+  const marcados = $('producto-catalogo').querySelectorAll('input:checked').length;
+  const otro = $('incluir-otro').checked && $('producto-libre').value.trim().length > 0;
+  const cantidad = marcados + Number(otro);
+  $('agregar-seleccionados').disabled = cantidad === 0;
+  $('conteo-seleccion').textContent = `${cantidad} seleccionado${cantidad === 1 ? '' : 's'}`;
+  const todos = $('producto-catalogo').querySelectorAll('input').length;
+  $('seleccionar-todos').textContent = marcados === todos && todos > 0 ? 'Ninguno' : 'Todos';
 }
 /** Construye un campo numérico accesible para modificar un renglón. */
 function crearCampoNumerico(item, propiedad, etiqueta, opciones = {}) {
@@ -340,24 +359,35 @@ function configurarEventos() {
   $('titulo').addEventListener('change',async e=>{activa.titulo=e.target.value.trim()||'Nueva lista';await persistir();});
   $('fecha').addEventListener('change',async e=>{if(e.target.value){activa.fecha=e.target.value;await persistir();}});
   $('categoria').addEventListener('change', renderizarCatalogo);
-  $('producto-catalogo').addEventListener('change', () => {
+  $('incluir-otro').addEventListener('change', () => {
     mostrarCampoOtro();
-    if ($('producto-catalogo').value === '__otro__') $('producto-libre').focus();
+    if ($('incluir-otro').checked) $('producto-libre').focus();
+  });
+  $('producto-libre').addEventListener('input', actualizarSeleccion);
+  $('seleccionar-todos').addEventListener('click', () => {
+    const casillas = [...$('producto-catalogo').querySelectorAll('input')];
+    const marcar = !casillas.every(c => c.checked);
+    casillas.forEach(c => { c.checked = marcar; });
+    actualizarSeleccion();
   });
   $('form-producto').addEventListener('submit', async evento => {
     evento.preventDefault();
-    const identificador = $('producto-catalogo').value;
-    const seleccionado = catalogos.find(c => c.categoria === $('categoria').value)?.productos.find(p => p.id === identificador);
-    const nombre = identificador === '__otro__' ? $('producto-libre').value.trim() : seleccionado?.nombre;
-    if (!nombre) { avisar('Elegí un producto o escribí su nombre.'); return; }
-    activa.items.push({
-      id: crypto.randomUUID(), nombre, cantidad: 1,
-      unidad: seleccionado?.unidad || 'un.', precio: null, comprado: false
+    const catalogo = catalogos.find(c => c.categoria === $('categoria').value);
+    const ids = [...$('producto-catalogo').querySelectorAll('input:checked')].map(c => c.value);
+    const nuevos = ids.map(id => catalogo?.productos.find(p => p.id === id)).filter(Boolean);
+    const libre = $('incluir-otro').checked ? $('producto-libre').value.trim() : '';
+    if (libre) nuevos.push({ nombre: libre, unidad: 'un.' });
+    if (!nuevos.length) return;
+    for (const producto of nuevos) activa.items.push({
+      id: crypto.randomUUID(), nombre: producto.nombre, cantidad: 1,
+      unidad: producto.unidad || 'un.', precio: null, comprado: false
     });
+    // Guardamos sin desplazar la selección: el catálogo queda en el mismo lugar.
+    const posicion = $('producto-catalogo').scrollTop;
     await persistir();
-    $('producto-catalogo').value = '';
-    mostrarCampoOtro();
-    $('producto-catalogo').focus();
+    renderizarCatalogo();
+    $('producto-catalogo').scrollTop = posicion;
+    avisar(`${nuevos.length} producto${nuevos.length === 1 ? '' : 's'} agregado${nuevos.length === 1 ? '' : 's'}.`);
   });
   $('exportar-listas').addEventListener('click',()=>descargarJSON('mi-changuito-listas.json',{version:1,tipo:'listas',listas}));
   $('exportar-catalogo').addEventListener('click',()=>descargarJSON('mi-changuito-catalogos.json',{version:1,tipo:'catalogos',catalogos}));
