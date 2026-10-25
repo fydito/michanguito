@@ -180,9 +180,7 @@ function actualizarSeleccion() {
   const cantidad = marcados + Number(otro);
   $('agregar-seleccionados').disabled = cantidad === 0;
   $('conteo-seleccion').textContent = `${cantidad} seleccionado${cantidad === 1 ? '' : 's'}`;
-  $('texto-selector-productos').textContent = cantidad ? `Producto · ${cantidad} seleccionado${cantidad === 1 ? '' : 's'}` : 'Producto · Seleccionar productos...';
-  const todos = $('producto-catalogo').querySelectorAll('input').length;
-  $('seleccionar-todos').textContent = marcados === todos && todos > 0 ? 'Ninguno' : 'Todos';
+  $('texto-selector-productos').textContent = cantidad ? `Seleccionados: ${cantidad}` : 'Seleccionar productos...';
 }
 /** Construye un campo numérico accesible para modificar un renglón. */
 function crearCampoNumerico(item, propiedad, etiqueta, opciones = {}) {
@@ -373,12 +371,6 @@ function configurarEventos() {
     if ($('incluir-otro').checked) $('producto-libre').focus();
   });
   $('producto-libre').addEventListener('input', actualizarSeleccion);
-  $('seleccionar-todos').addEventListener('click', () => {
-    const casillas = [...$('producto-catalogo').querySelectorAll('input')];
-    const marcar = !casillas.every(c => c.checked);
-    casillas.forEach(c => { c.checked = marcar; });
-    actualizarSeleccion();
-  });
   $('form-producto').addEventListener('submit', async evento => {
     evento.preventDefault();
     const catalogo = catalogos.find(c => c.categoria === $('categoria').value);
