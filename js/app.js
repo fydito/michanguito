@@ -135,10 +135,16 @@ function renderizarCategorias() {
   const selector = $('categoria');
   const anterior = selector.value;
   selector.replaceChildren();
-  for (const catalogo of catalogos) {
-    selector.add(new Option(categorias.find(c => c.id === catalogo.categoria)?.nombre ?? catalogo.categoria, catalogo.categoria));
+  for (const categoria of categorias) {
+    selector.add(new Option(categoria.nombre, categoria.id));
   }
   if ([...selector.options].some(opcion => opcion.value === anterior)) selector.value = anterior;
+}
+/** Abre o cierra el catálogo sin modificar la selección temporal. */
+function desplegarProductos(abierto) {
+  $('panel-productos').hidden = !abierto;
+  $('alternar-productos').setAttribute('aria-expanded', String(abierto));
+  $('flecha-productos').textContent = abierto ? '▴' : '▾';
 }
 /** Catálogo alfabético con selección múltiple temporal (no refleja compras previas). */
 function renderizarCatalogo() {
@@ -157,6 +163,7 @@ function renderizarCatalogo() {
   }
   $('incluir-otro').checked = false;
   $('producto-libre').value = '';
+  desplegarProductos(false);
   mostrarCampoOtro();
   actualizarSeleccion();
 }
@@ -173,6 +180,7 @@ function actualizarSeleccion() {
   const cantidad = marcados + Number(otro);
   $('agregar-seleccionados').disabled = cantidad === 0;
   $('conteo-seleccion').textContent = `${cantidad} seleccionado${cantidad === 1 ? '' : 's'}`;
+  $('texto-selector-productos').textContent = cantidad ? `Producto · ${cantidad} seleccionado${cantidad === 1 ? '' : 's'}` : 'Producto · Seleccionar productos...';
   const todos = $('producto-catalogo').querySelectorAll('input').length;
   $('seleccionar-todos').textContent = marcados === todos && todos > 0 ? 'Ninguno' : 'Todos';
 }
@@ -359,6 +367,7 @@ function configurarEventos() {
   $('titulo').addEventListener('change',async e=>{activa.titulo=e.target.value.trim()||'Nueva lista';await persistir();});
   $('fecha').addEventListener('change',async e=>{if(e.target.value){activa.fecha=e.target.value;await persistir();}});
   $('categoria').addEventListener('change', renderizarCatalogo);
+  $('alternar-productos').addEventListener('click', () => desplegarProductos($('panel-productos').hidden));
   $('incluir-otro').addEventListener('change', () => {
     mostrarCampoOtro();
     if ($('incluir-otro').checked) $('producto-libre').focus();
@@ -382,11 +391,8 @@ function configurarEventos() {
       id: crypto.randomUUID(), nombre: producto.nombre, cantidad: 1,
       unidad: producto.unidad || 'un.', precio: null, comprado: false
     });
-    // Guardamos sin desplazar la selección: el catálogo queda en el mismo lugar.
-    const posicion = $('producto-catalogo').scrollTop;
     await persistir();
-    renderizarCatalogo();
-    $('producto-catalogo').scrollTop = posicion;
+    renderizarCatalogo(); // Limpia los tildes y cierra el catálogo.
     avisar(`${nuevos.length} producto${nuevos.length === 1 ? '' : 's'} agregado${nuevos.length === 1 ? '' : 's'}.`);
   });
   $('exportar-listas').addEventListener('click',()=>descargarJSON('mi-changuito-listas.json',{version:1,tipo:'listas',listas}));
