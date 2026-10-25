@@ -1,19 +1,19 @@
 [
   {
     "id": "almacen",
-    "nombre": "Almacen"
+    "nombre": "Almacén"
   },
   {
     "id": "verduleria",
-    "nombre": "Verduleria"
+    "nombre": "Verdulería"
   },
   {
     "id": "carniceria",
-    "nombre": "Carniceria"
+    "nombre": "Carnicería"
   },
   {
     "id": "libreria",
-    "nombre": "Libreria"
+    "nombre": "Librería"
   },
   {
     "id": "farmacia",
@@ -22,5 +22,17 @@
   {
     "id": "limpieza",
     "nombre": "Limpieza"
+  },
+  {
+    "id": "higiene",
+    "nombre": "Higiene personal"
+  },
+  {
+    "id": "bazar",
+    "nombre": "Bazar"
+  },
+  {
+    "id": "mascotas",
+    "nombre": "Mascotas"
   }
 ]
