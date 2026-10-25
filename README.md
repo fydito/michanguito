@@ -120,3 +120,13 @@ Tarjetas elevadas para listas y productos, campos hundidos, mayor contraste y ti
 - Icono Apple Touch 180 PNG.
 - Service Worker con caché renovada para todos los iconos.
 - No se modificó la lógica de las listas ni los catálogos.
+
+
+## Corrección v0.1.13: catálogo local y catálogo oficial
+- Se agregan las tres categorías omitidas en `data/categorias.json`: higiene, bazar y mascotas.
+- IndexedDB se actualiza de versión 1 a 2, conservando las listas y los catálogos.
+- Al iniciar se incorporan productos faltantes desde los JSON oficiales; no se reemplazan los productos personales.
+- `catalogos_base` conserva la referencia oficial para futuras actualizaciones.
+- Los JSON oficiales se consultan primero en la red y usan caché sin conexión.
+- Si una persona editó un producto oficial antes de esta migración, se respeta su versión local.
+- No borres datos de la PWA ni IndexedDB.
