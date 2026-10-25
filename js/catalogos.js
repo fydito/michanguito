@@ -21,17 +21,42 @@ export function validarCatalogo(datos) {
   return { version: 1, categoria: datos.categoria, productos };
 }
 
-/** Inicializa catálogos predeterminados sin sobrescribir los personalizados. */
+/**
+ * Actualiza la copia local con el catálogo oficial SIN borrar personalizaciones.
+ * - ID nuevo: se incorpora.
+ * - ID existente modificado por el usuario: se conserva.
+ * - ID existente sin modificaciones: se actualiza desde el JSON oficial.
+ * - ID eliminado del JSON oficial: se conserva para no perder datos.
+ * La referencia anterior permite distinguir una edición personal de una actualización oficial.
+ */
 export async function inicializarCatalogos() {
-  const existentes = await obtenerTodos('catalogos');
   const respuestaCategorias = await fetch('./data/categorias.json');
   if (!respuestaCategorias.ok) throw new Error('No se pudo cargar categorias.json');
   const categorias = await respuestaCategorias.json();
+  const existentes = new Map((await obtenerTodos('catalogos')).map(c => [c.categoria, c]));
+  const referencias = new Map((await obtenerTodos('catalogos_base')).map(c => [c.categoria, c]));
   for (const categoria of categorias) {
-    if (existentes.some(c => c.categoria === categoria.id)) continue;
     const respuesta = await fetch(`./data/catalogos/${categoria.id}.json`);
     if (!respuesta.ok) throw new Error(`No se pudo cargar ${categoria.id}.json`);
-    await guardar('catalogos', validarCatalogo(await respuesta.json()));
+    const oficial = validarCatalogo(await respuesta.json());
+    const local = existentes.get(categoria.id);
+    const anterior = referencias.get(categoria.id);
+    if (!local) {
+      await guardar('catalogos', oficial);
+    } else {
+      const anteriores = new Map((anterior?.productos ?? []).map(p => [p.id, p]));
+      const combinados = new Map(local.productos.map(p => [p.id, p]));
+      for (const producto of oficial.productos) {
+        const actual = combinados.get(producto.id);
+        const basePrevia = anteriores.get(producto.id);
+        // En la primera migración, respetamos los nombres ya guardados.
+        if (!actual || (basePrevia && actual.nombre === basePrevia.nombre && actual.unidad === basePrevia.unidad)) {
+          combinados.set(producto.id, producto);
+        }
+      }
+      await guardar('catalogos', { ...local, productos: [...combinados.values()] });
+    }
+    await guardar('catalogos_base', oficial);
   }
   return categorias;
 }

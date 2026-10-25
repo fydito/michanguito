@@ -4,7 +4,7 @@
  * Descripción: Persistencia local de listas y catálogos mediante IndexedDB.
  */
 const NOMBRE_BASE = 'mi_changuito';
-const VERSION_BASE = 1;
+const VERSION_BASE = 2;
 
 /** Abre la base de datos y crea los almacenes si todavía no existen. @returns {Promise<IDBDatabase>} */
 function abrirBase() {
@@ -14,6 +14,8 @@ function abrirBase() {
       const base = solicitud.result;
       if (!base.objectStoreNames.contains('listas')) base.createObjectStore('listas', { keyPath: 'id' });
       if (!base.objectStoreNames.contains('catalogos')) base.createObjectStore('catalogos', { keyPath: 'categoria' });
+      // Referencia de la última versión oficial aplicada, para distinguir cambios personales.
+      if (!base.objectStoreNames.contains('catalogos_base')) base.createObjectStore('catalogos_base', { keyPath: 'categoria' });
     };
     solicitud.onsuccess = () => resolve(solicitud.result);
     solicitud.onerror = () => reject(solicitud.error);
