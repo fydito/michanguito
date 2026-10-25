@@ -75,12 +75,15 @@
       <form id="form-producto" class="form-producto">
         <h3>Agregar producto</h3>
         <label>Categoría<select id="categoria"></select></label>
+        <button id="alternar-productos" class="selector-productos" type="button" aria-expanded="false" aria-controls="panel-productos"><span id="texto-selector-productos">Producto · Seleccionar productos...</span><span id="flecha-productos" aria-hidden="true">▾</span></button>
+        <div id="panel-productos" hidden>
         <div class="catalogo-cabecera"><span>Seleccioná uno o varios productos</span><button id="seleccionar-todos" class="boton secundario pequeno" type="button">Todos</button></div>
         <div id="producto-catalogo" class="catalogo-seleccion" role="group" aria-label="Productos de la categoría"></div>
         <label class="catalogo-otro"><input id="incluir-otro" type="checkbox"> Otro producto (escribir nombre)</label>
         <label id="grupo-producto-otro" class="campo-otro" hidden>Nombre del producto
           <input id="producto-libre" type="text" maxlength="100" placeholder="Escribí el producto" autocomplete="off">
         </label>
+        </div>
         <div class="catalogo-acciones"><button id="agregar-seleccionados" class="boton" type="submit" disabled>Agregar</button><span id="conteo-seleccion" aria-live="polite">0 seleccionados</span></div>
       </form>
       <div class="totales"><div class="fila entre"><strong>Total estimado</strong><strong id="total">$ 0,00</strong></div><div class="fila entre"><span>Renglones</span><span id="renglones">0</span></div><div class="fila entre"><span>Cantidad total de productos</span><span id="cantidad-total">0</span></div><div class="fila entre"><span>Marcados</span><span id="marcados">0</span></div><small>El total incluye solo los productos con precio cargado.</small></div>
