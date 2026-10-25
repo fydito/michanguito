@@ -510,3 +510,10 @@ input::placeholder { color:var(--texto-secundario);opacity:.88;font-weight:450; 
 .catalogo-otro{display:flex!important;flex-direction:row;align-items:center;gap:.65rem;margin-top:.85rem}
 .catalogo-acciones{position:sticky;bottom:0;z-index:3;display:flex;align-items:center;gap:.85rem;padding:.7rem 0;background:var(--tarjeta,var(--fondo,#fff));border-top:1px solid var(--borde,#e7eeea)}
 .catalogo-acciones .boton{margin-top:0!important;min-width:135px}.catalogo-acciones span{font-size:.82rem;opacity:.8}
+
+/* v0.1.15: catálogo desplegable compacto, sin ocupar espacio al estar cerrado. */
+#panel-productos[hidden]{display:none!important}
+.selector-productos{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:.6rem;padding:.85rem 1rem;background:var(--campo-soft);border:1.5px solid var(--campo-borde);border-radius:11px;color:var(--texto-campo);font:inherit;font-weight:650;text-align:left;cursor:pointer}
+.selector-productos:focus-visible{outline:3px solid var(--campo-foco);outline-offset:2px}
+#flecha-productos{font-size:1.2rem;line-height:1}
+#panel-productos .catalogo-cabecera{margin-top:.65rem}
