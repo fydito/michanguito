@@ -517,3 +517,15 @@ input::placeholder { color:var(--texto-secundario);opacity:.88;font-weight:450; 
 .selector-productos:focus-visible{outline:3px solid var(--campo-foco);outline-offset:2px}
 #flecha-productos{font-size:1.2rem;line-height:1}
 #panel-productos .catalogo-cabecera{margin-top:.65rem}
+
+/* v0.1.16: acciones visibles y cómodas en pantalla pequeña. */
+.catalogo-acciones{bottom:env(safe-area-inset-bottom,0px);border-radius:0 0 10px 10px}
+@media(max-width:600px){
+  .catalogo-acciones{bottom:env(safe-area-inset-bottom,0px);padding:.55rem .6rem;gap:.65rem;box-shadow:0 -3px 12px rgba(0,0,0,.08)}
+  .catalogo-acciones .boton{min-width:110px;padding:.7rem 1rem}
+  .catalogo-acciones span{font-size:.75rem}
+}
+
+/* v0.1.17: el botón Agregar sigue el flujo normal, nunca fijo ni sticky. */
+.catalogo-acciones{position:static;bottom:auto;z-index:auto;box-shadow:none}
+@media(max-width:600px){.catalogo-acciones{position:static;bottom:auto;box-shadow:none}}
