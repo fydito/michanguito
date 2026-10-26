@@ -17,7 +17,7 @@
   <title>Mi Changuito</title>
 </head>
 <body>
-  <header class="cabecera"><div class="contenedor cabecera-interior"><h1><img class="changui-cabecera" src="./img/changui-favicon-64.png" alt="" width="72" height="72"> Mi Changuito</h1><div class="cabecera-acciones"><span class="etiqueta">Modo local · v0.1.19</span><button id="abrir-config" class="boton-icono" type="button" aria-label="Configuración" title="Configuración">⚙</button></div></div></header>
+  <header class="cabecera"><div class="contenedor cabecera-interior"><h1><img class="changui-cabecera" src="./img/changui-favicon-64.png" alt="" width="72" height="72"> Mi Changuito</h1><div class="cabecera-acciones"><span class="etiqueta">Modo local · v0.1.20</span><button id="abrir-config" class="boton-icono" type="button" aria-label="Configuración" title="Configuración">⚙</button></div></div></header>
   <main class="contenedor distribucion">
     <section id="pantalla-inicio" class="panel" aria-label="Mis listas">
       <div class="fila entre"><h2>Mis listas</h2><button id="nueva-lista" class="boton pequeno" type="button">+ Nueva lista</button></div>
@@ -46,6 +46,14 @@
           <label><input type="radio" name="modo-apariencia" value="noche"> ☾ Noche</label>
         </div>
       </fieldset>
+      <fieldset class="selector-estilo">
+        <legend>Estilo de colores</legend>
+        <div class="opciones-modo">
+          <label><input type="radio" name="estilo-apariencia" value="clasico"> Clásico</label>
+          <label><input type="radio" name="estilo-apariencia" value="colorido"> Colorido</label>
+        </div>
+        <p class="ayuda">Colorido destaca precios, cantidades y compras sin cambiar el tema principal.</p>
+      </fieldset>
       <h3>Accesibilidad</h3>
       <label for="tamano-texto">Tamaño de texto: <output id="etiqueta-tamano">Normal</output></label>
       <input id="tamano-texto" type="range" min="0" max="3" step="1" value="0" aria-label="Tamaño de texto">
@@ -58,8 +66,6 @@
       <p class="ayuda">Los productos marcados permanecen en su lugar.</p>
       <h3>Datos y catálogos</h3>
       <div class="acciones-verticales">
-        <button id="exportar-listas" class="boton secundario" type="button">Exportar listas JSON</button>
-        <label class="boton secundario archivo">Importar listas JSON<input id="importar-listas" type="file" accept=".json,application/json" hidden></label>
         <button id="exportar-catalogo" class="boton secundario" type="button">Exportar catálogo JSON</button>
         <label class="boton secundario archivo">Importar catálogo JSON<input id="importar-catalogo" type="file" accept=".json,application/json" hidden></label>
       </div>
