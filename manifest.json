@@ -1,9 +1,10 @@
 {
+  "id": "/michanguito/",
   "name": "Mi Changuito",
   "short_name": "Changuito",
   "description": "Listas de compras personales",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": "/michanguito/",
+  "scope": "/michanguito/",
   "display": "standalone",
   "background_color": "#f1f5f3",
   "theme_color": "#147d66",
