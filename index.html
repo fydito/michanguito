@@ -13,15 +13,16 @@
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" href="./img/changui-favicon-64.png" type="image/png" sizes="64x64">
   <link rel="apple-touch-icon" href="./img/changui-apple-180.png" sizes="180x180">
-  <link rel="stylesheet" href="./css/styles.css?v=0110">
+  <link rel="stylesheet" href="./css/styles.css?v=0119">
   <title>Mi Changuito</title>
 </head>
 <body>
-  <header class="cabecera"><div class="contenedor cabecera-interior"><h1><img class="changui-cabecera" src="./img/changui-favicon-64.png" alt="" width="36" height="36"> Mi Changuito</h1><div class="cabecera-acciones"><span class="etiqueta">Modo local · v0.1.10</span><button id="abrir-config" class="boton-icono" type="button" aria-label="Configuración" title="Configuración">⚙</button></div></div></header>
+  <header class="cabecera"><div class="contenedor cabecera-interior"><h1><img class="changui-cabecera" src="./img/changui-favicon-64.png" alt="" width="72" height="72"> Mi Changuito</h1><div class="cabecera-acciones"><span class="etiqueta">Modo local · v0.1.19</span><button id="abrir-config" class="boton-icono" type="button" aria-label="Configuración" title="Configuración">⚙</button></div></div></header>
   <main class="contenedor distribucion">
     <section id="pantalla-inicio" class="panel" aria-label="Mis listas">
       <div class="fila entre"><h2>Mis listas</h2><button id="nueva-lista" class="boton pequeno" type="button">+ Nueva lista</button></div>
       <div id="listado-listas" class="listado-listas"></div>
+      <label class="boton secundario archivo carga-mlis">📂 Cargar una lista<input id="cargar-mlis" type="file" accept=".mlis,application/json" hidden></label>
     </section>
     <dialog id="panel-config" class="dialogo-config" aria-label="Configuración"><div class="fila entre"><h2>Configuración</h2><button id="cerrar-config" class="boton pequeno secundario" type="button">Cerrar ×</button></div>
       <h3>Apariencia</h3>
@@ -45,6 +46,10 @@
           <label><input type="radio" name="modo-apariencia" value="noche"> ☾ Noche</label>
         </div>
       </fieldset>
+      <h3>Accesibilidad</h3>
+      <label for="tamano-texto">Tamaño de texto: <output id="etiqueta-tamano">Normal</output></label>
+      <input id="tamano-texto" type="range" min="0" max="3" step="1" value="0" aria-label="Tamaño de texto">
+      <div class="marcas-tamano"><span>Normal</span><span>Grande</span><span>Muy grande</span><span>Extra grande</span></div>
       <h3>Comportamiento de la lista</h3>
       <label class="opcion-config"><input id="confirmar-borrado" type="checkbox" checked>
         <span>Confirmar antes de eliminar productos</span></label>
@@ -62,7 +67,7 @@
     </dialog>
     <section id="pantalla-editor" class="panel principal" aria-label="Editor de lista" hidden>
       <button id="volver-listas" class="boton secundario pequeno" type="button">← Mis listas</button>
-      <div class="fila entre encabezado-lista"><h2>Lista de compras</h2><button id="eliminar-lista" class="boton peligro pequeno" type="button">Eliminar lista</button></div>
+      <div class="fila entre encabezado-lista"><h2>Lista de compras</h2><div class="acciones-lista"><button id="guardar-mlis" class="boton secundario pequeno" type="button">Guardar lista</button><button id="eliminar-lista" class="boton peligro pequeno" type="button">Eliminar lista</button></div></div>
       <div class="form-grid">
         <label>Título<input id="titulo" type="text" maxlength="100" placeholder="Ej.: Compras del sábado"></label>
         <label>Visibilidad<select id="visibilidad"><option value="personal">Personal</option><option value="compartida" disabled>Compartida (próximamente)</option></select></label>
@@ -102,7 +107,7 @@
       <button id="aceptar-item" type="button" class="boton peligro">Eliminar</button>
     </div>
   </dialog>
-  <script type="module" src="./js/tema.js?v=0110"></script>
-  <script type="module" src="./js/app.js?v=0110"></script>
+  <script type="module" src="./js/tema.js?v=0119"></script>
+  <script type="module" src="./js/app.js?v=0119"></script>
 </body>
 </html>
