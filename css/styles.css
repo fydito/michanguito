@@ -546,3 +546,35 @@ input::placeholder { color:var(--texto-secundario);opacity:.88;font-weight:450; 
 :root[data-tamano-texto="2"] .item-compacto,:root[data-tamano-texto="3"] .item-compacto{flex-wrap:wrap}
 :root[data-tamano-texto="3"] .item-compacto .campo-item{min-width:42%}
 @media(max-width:480px){.changui-cabecera{width:64px;height:64px}.cabecera-interior{gap:.3rem}.cabecera h1{font-size:1.1rem}.cabecera .etiqueta{display:none}.acciones-lista .boton{font-size:.8rem}.marcas-tamano{font-size:.6rem}}
+
+/* v0.1.20: estilo Colorido opcional, independiente del tema y del modo. */
+:root[data-estilo="colorido"] {
+  --color-precio:#8a5400;
+  --fondo-precio:#fff0ba;
+  --color-pasos:#173b72;
+  --fondo-pasos:#d5e6ff;
+  --color-confirmar:#064e36;
+  --fondo-confirmar:#8ce2b5;
+}
+:root[data-estilo="colorido"][data-modo="noche"] {
+  --color-precio:#ffdd8d;
+  --fondo-precio:#4b371d;
+  --color-pasos:#b9d7ff;
+  --fondo-pasos:#253f63;
+  --color-confirmar:#b7f5cf;
+  --fondo-confirmar:#245b45;
+}
+:root[data-estilo="colorido"] .paso-cantidad {
+  color:var(--color-pasos);background:var(--fondo-pasos);
+}
+:root[data-estilo="colorido"] .item-compacto .marcar.marcado {
+  color:var(--color-confirmar);background:var(--fondo-confirmar);border-color:var(--color-confirmar);
+}
+:root[data-estilo="colorido"] .item-compacto .campo-item:has(input[data-campo="precio"]) input,
+:root[data-estilo="colorido"] .item-compacto .campo-precio input {
+  color:var(--color-precio);background:var(--fondo-precio);font-weight:700;
+}
+:root[data-estilo="colorido"] .totales strong,
+:root[data-estilo="colorido"] .totales output {
+  color:var(--color-precio);
+}
