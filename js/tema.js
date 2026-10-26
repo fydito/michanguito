@@ -80,3 +80,22 @@ function iniciarApariencia() {
   });
 }
 iniciarApariencia();
+
+// Preferencia local de accesibilidad: cuatro niveles independientes del tema.
+(function iniciarTamanoTexto(){
+  const control=document.getElementById('tamano-texto');
+  const salida=document.getElementById('etiqueta-tamano');
+  if(!control || !salida) return;
+  const nombres=['Normal','Grande','Muy grande','Extra grande'];
+  const clave='mi-changuito-tamano-texto';
+  let valor=0;
+  try { valor=Number(localStorage.getItem(clave)); } catch {}
+  if(!Number.isInteger(valor) || valor<0 || valor>3) valor=0;
+  const aplicar=n=>{
+    document.documentElement.dataset.tamanoTexto=String(n);
+    control.value=String(n); salida.textContent=nombres[n];
+    try { localStorage.setItem(clave,String(n)); } catch {}
+  };
+  aplicar(valor);
+  control.addEventListener('input',()=>aplicar(Number(control.value)));
+})();

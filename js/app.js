@@ -358,6 +358,32 @@ function configurarEventos() {
   $('cerrar-config').addEventListener('click', () => $('panel-config').close());
   $('nueva-lista').addEventListener('click',async()=>{activa=crearLista();await persistir();mostrarPantalla(true);$('titulo').focus();});
   $('volver-listas').addEventListener('click',()=>mostrarPantalla(false));
+  // Formato .mlis: copia portátil de una sola lista, independiente del catálogo.
+  $('guardar-mlis').addEventListener('click', () => {
+    if (!activa) return;
+    const nombre = (activa.titulo || 'mi-lista').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9_-]+/gi,'-').replace(/^-|-$/g,'').slice(0,70) || 'mi-lista';
+    const documento = { formato:'mi-changuito-lista', version:1, exportado:new Date().toISOString(), lista:activa };
+    const blob = new Blob([JSON.stringify(documento,null,2)], {type:'application/json;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a'); link.href=url; link.download=nombre+'.mlis'; document.body.append(link); link.click(); link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+    avisar('Lista exportada en formato .mlis');
+  });
+  $('cargar-mlis').addEventListener('change', async e => {
+    const archivo = e.target.files?.[0];
+    try {
+      if (!archivo) return;
+      if (!archivo.name.toLowerCase().endsWith('.mlis')) throw new Error('Elegí un archivo .mlis');
+      if (archivo.size > 2*1024*1024) throw new Error('El archivo supera los 2 MB.');
+      const datos = JSON.parse(await archivo.text());
+      if (datos?.formato !== 'mi-changuito-lista' || datos.version !== 1 || !datos.lista) throw new Error('Formato .mlis no reconocido.');
+      const nueva = validarLista(datos.lista); // Genera UUID nuevos para no sobrescribir listas.
+      await guardar('listas',nueva); listas=await obtenerTodos('listas'); activa=nueva;
+      renderizar(); mostrarPantalla(true); avisar('Lista cargada correctamente.');
+    } catch(error) { avisar(error instanceof SyntaxError?'Archivo .mlis dañado o inválido.':error.message); }
+    finally { e.target.value=''; }
+  });
+
   $('eliminar-lista').addEventListener('click',async()=>{
     if(!activa||!confirm(`¿Eliminar la lista «${activa.titulo}»?`))return;
     await eliminar('listas',activa.id);listas=await obtenerTodos('listas');activa=listas[0]??crearLista();await persistir();mostrarPantalla(false);
