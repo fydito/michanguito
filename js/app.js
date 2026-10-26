@@ -185,7 +185,7 @@ function actualizarSeleccion() {
 /** Construye un campo numérico accesible para modificar un renglón. */
 function crearCampoNumerico(item, propiedad, etiqueta, opciones = {}) {
   const campo = document.createElement('label');
-  campo.className = 'campo-item';
+  campo.className = 'campo-item' + (propiedad === 'precio' ? ' campo-precio' : '');
   campo.append(nodo('span', etiqueta));
   const entrada = document.createElement('input');
   entrada.type = 'number';
@@ -413,9 +413,7 @@ function configurarEventos() {
     renderizarCatalogo(); // Limpia los tildes y cierra el catálogo.
     avisar(`${nuevos.length} producto${nuevos.length === 1 ? '' : 's'} agregado${nuevos.length === 1 ? '' : 's'}.`);
   });
-  $('exportar-listas').addEventListener('click',()=>descargarJSON('mi-changuito-listas.json',{version:1,tipo:'listas',listas}));
   $('exportar-catalogo').addEventListener('click',()=>descargarJSON('mi-changuito-catalogos.json',{version:1,tipo:'catalogos',catalogos}));
-  $('importar-listas').addEventListener('change',async e=>{try{await importarListas(await leerJSON(e.target.files[0]));}catch(error){avisar(error.message);}e.target.value='';});
   $('importar-catalogo').addEventListener('change',async e=>{
     try{
       const datos=await leerJSON(e.target.files[0]);const entradas=Array.isArray(datos.catalogos)?datos.catalogos:[datos];

@@ -12,7 +12,8 @@
 const CLAVE = 'mi-changuito-apariencia';
 const COLORES = ['verde', 'azul', 'violeta', 'terracota', 'rubi', 'electrico', 'solar', 'rosa'];
 const MODOS = ['dia', 'noche'];
-const INICIAL = { tema: 'verde', modo: 'dia' };
+const ESTILOS = ['clasico', 'colorido'];
+const INICIAL = { tema: 'verde', modo: 'dia', estilo: 'clasico' };
 
 /**
  * Lee y valida las preferencias para evitar valores no admitidos.
@@ -23,7 +24,8 @@ function recuperarApariencia() {
     const guardada = JSON.parse(localStorage.getItem(CLAVE) || '{}');
     return {
       tema: COLORES.includes(guardada.tema) ? guardada.tema : INICIAL.tema,
-      modo: MODOS.includes(guardada.modo) ? guardada.modo : INICIAL.modo
+      modo: MODOS.includes(guardada.modo) ? guardada.modo : INICIAL.modo,
+      estilo: ESTILOS.includes(guardada.estilo) ? guardada.estilo : INICIAL.estilo
     };
   } catch (error) {
     console.warn('No fue posible leer la apariencia:', error);
@@ -38,6 +40,7 @@ function recuperarApariencia() {
 function aplicarApariencia(apariencia) {
   document.documentElement.dataset.tema = apariencia.tema;
   document.documentElement.dataset.modo = apariencia.modo;
+  document.documentElement.dataset.estilo = apariencia.estilo;
   document.querySelectorAll('[data-elegir-tema]').forEach(boton => {
     const activo = boton.dataset.elegirTema === apariencia.tema;
     boton.setAttribute('aria-pressed', String(activo));
@@ -45,6 +48,9 @@ function aplicarApariencia(apariencia) {
   });
   document.querySelectorAll('[name="modo-apariencia"]').forEach(radio => {
     radio.checked = radio.value === apariencia.modo;
+  });
+  document.querySelectorAll('[name="estilo-apariencia"]').forEach(radio => {
+    radio.checked = radio.value === apariencia.estilo;
   });
   const coloresBarra = {
     verde: '#147d66', azul: '#2864ba',
@@ -68,6 +74,14 @@ function iniciarApariencia() {
     boton.addEventListener('click', () => {
       apariencia.tema = boton.dataset.elegirTema;
       aplicarApariencia(apariencia);
+    });
+  });
+  document.querySelectorAll('[name="estilo-apariencia"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      if (radio.checked) {
+        apariencia.estilo = radio.value;
+        aplicarApariencia(apariencia);
+      }
     });
   });
   document.querySelectorAll('[name="modo-apariencia"]').forEach(radio => {
