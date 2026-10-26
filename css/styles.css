@@ -529,3 +529,20 @@ input::placeholder { color:var(--texto-secundario);opacity:.88;font-weight:450; 
 /* v0.1.17: el botón Agregar sigue el flujo normal, nunca fijo ni sticky. */
 .catalogo-acciones{position:static;bottom:auto;z-index:auto;box-shadow:none}
 @media(max-width:600px){.catalogo-acciones{position:static;bottom:auto;box-shadow:none}}
+
+/* v0.1.19: mascota y controles accesibles */
+.changui-cabecera{width:72px;height:72px;object-fit:contain;vertical-align:middle;flex-shrink:0}
+.cabecera h1{display:flex;align-items:center;gap:.55rem}
+.acciones-lista{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:flex-end}
+.carga-mlis{margin-top:.8rem;text-align:center}
+.marcas-tamano{display:flex;justify-content:space-between;gap:.3rem;font-size:.7rem;color:var(--texto-secundario,#667);margin:.2rem 0 1rem}
+#tamano-texto{accent-color:var(--acento,#147d66)}
+:root[data-tamano-texto="1"]{font-size:118.75%}
+:root[data-tamano-texto="2"]{font-size:137.5%}
+:root[data-tamano-texto="3"]{font-size:162.5%}
+/* Escalar también los controles con tamaños explícitos en px/rem y permitir salto de línea. */
+:root[data-tamano-texto="1"] .item-compacto .nombre-producto,:root[data-tamano-texto="2"] .item-compacto .nombre-producto,:root[data-tamano-texto="3"] .item-compacto .nombre-producto{font-size:1rem}
+:root[data-tamano-texto="1"] .item-compacto .campo-item input,:root[data-tamano-texto="2"] .item-compacto .campo-item input,:root[data-tamano-texto="3"] .item-compacto .campo-item input{font-size:1rem}
+:root[data-tamano-texto="2"] .item-compacto,:root[data-tamano-texto="3"] .item-compacto{flex-wrap:wrap}
+:root[data-tamano-texto="3"] .item-compacto .campo-item{min-width:42%}
+@media(max-width:480px){.changui-cabecera{width:64px;height:64px}.cabecera-interior{gap:.3rem}.cabecera h1{font-size:1.1rem}.cabecera .etiqueta{display:none}.acciones-lista .boton{font-size:.8rem}.marcas-tamano{font-size:.6rem}}
