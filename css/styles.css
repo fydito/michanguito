@@ -578,3 +578,13 @@ input::placeholder { color:var(--texto-secundario);opacity:.88;font-weight:450; 
 :root[data-estilo="colorido"] .totales output {
   color:var(--color-precio);
 }
+
+/* Primera apertura y cuenta local — v0.1.21 */
+.bienvenida { max-width: min(92vw, 430px); }
+.bienvenida-interior { display:flex; flex-direction:column; align-items:stretch; gap:12px; text-align:center; }
+.bienvenida-interior img { align-self:center; object-fit:contain; }
+.bienvenida-interior h2, .bienvenida-interior p { margin:0; }
+.bienvenida-interior .boton { width:100%; }
+.bienvenida-interior button:disabled, .cuenta-local button:disabled { opacity:.6; cursor:not-allowed; }
+.cuenta-local { display:flex; flex-direction:column; align-items:flex-start; gap:10px; margin-bottom:18px; }
+.cuenta-local p { margin:0; }
