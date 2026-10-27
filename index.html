@@ -13,11 +13,21 @@
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" href="./img/changui-favicon-64.png" type="image/png" sizes="64x64">
   <link rel="apple-touch-icon" href="./img/changui-apple-180.png" sizes="180x180">
-  <link rel="stylesheet" href="./css/styles.css?v=0119">
+  <link rel="stylesheet" href="./css/styles.css?v=0121">
   <title>Mi Changuito</title>
 </head>
 <body>
-  <header class="cabecera"><div class="contenedor cabecera-interior"><h1><img class="changui-cabecera" src="./img/changui-favicon-64.png" alt="" width="72" height="72"> Mi Changuito</h1><div class="cabecera-acciones"><span class="etiqueta">Modo local · v0.1.20</span><button id="abrir-config" class="boton-icono" type="button" aria-label="Configuración" title="Configuración">⚙</button></div></div></header>
+  <header class="cabecera"><div class="contenedor cabecera-interior"><h1><img class="changui-cabecera" src="./img/changui-favicon-64.png" alt="" width="72" height="72"> Mi Changuito</h1><div class="cabecera-acciones"><span class="etiqueta">Modo local · v0.1.21</span><button id="abrir-config" class="boton-icono" type="button" aria-label="Configuración" title="Configuración">⚙</button></div></div></header>
+  <dialog id="bienvenida" class="dialogo-config bienvenida" aria-labelledby="bienvenida-titulo">
+    <div class="bienvenida-interior">
+      <img src="./img/changui-192.png" width="100" height="100" alt="Changui">
+      <h2 id="bienvenida-titulo">¡Bienvenido a Mi Changuito!</h2>
+      <p>Elegí cómo querés empezar.</p>
+      <button id="bienvenida-google" class="boton secundario" type="button" disabled>Continuar con Google (próximamente)</button>
+      <button id="bienvenida-invitado" class="boton" type="button">Usar como invitado</button>
+      <p class="ayuda">Como invitado, tus listas se guardan en este dispositivo. Más adelante podrás vincularlas a tu cuenta.</p>
+    </div>
+  </dialog>
   <main class="contenedor distribucion">
     <section id="pantalla-inicio" class="panel" aria-label="Mis listas">
       <div class="fila entre"><h2>Mis listas</h2><button id="nueva-lista" class="boton pequeno" type="button">+ Nueva lista</button></div>
@@ -25,6 +35,11 @@
       <label class="boton secundario archivo carga-mlis">📂 Cargar una lista<input id="cargar-mlis" type="file" accept=".mlis,application/json" hidden></label>
     </section>
     <dialog id="panel-config" class="dialogo-config" aria-label="Configuración"><div class="fila entre"><h2>Configuración</h2><button id="cerrar-config" class="boton pequeno secundario" type="button">Cerrar ×</button></div>
+      <h3>Mi cuenta</h3>
+      <div class="cuenta-local"><strong>Estás usando Mi Changuito como invitado</strong>
+        <p class="ayuda">Tus listas se guardan en este dispositivo. El ingreso con Google y la sincronización estarán disponibles al conectar el servidor.</p>
+        <button type="button" class="boton secundario" disabled>Iniciar sesión con Google (próximamente)</button>
+      </div>
       <h3>Apariencia</h3>
       <fieldset class="selector-temas">
         <legend>Color principal</legend>
@@ -113,7 +128,7 @@
       <button id="aceptar-item" type="button" class="boton peligro">Eliminar</button>
     </div>
   </dialog>
-  <script type="module" src="./js/tema.js?v=0119"></script>
-  <script type="module" src="./js/app.js?v=0119"></script>
+  <script type="module" src="./js/tema.js?v=0121"></script>
+  <script type="module" src="./js/app.js?v=0121"></script>
 </body>
 </html>
