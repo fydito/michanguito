@@ -12,6 +12,7 @@ const $ = id => document.getElementById(id);
 const moneda = numero => new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(numero);
 let listas = [], catalogos = [], categorias = [], activa = null;
 const CLAVE_PREFERENCIAS = 'mi-changuito-preferencias';
+const CLAVE_BIENVENIDA = 'mi-changuito-bienvenida-v1';
 let preferencias = { confirmarBorrado: true, permitirDeshacer: true };
 let borradoPendiente = null;
 let ultimoBorrado = null;
@@ -354,6 +355,11 @@ function configurarEventos() {
     }
   });
   $('deshacer-boton').addEventListener('click', () => deshacerBorrado().catch(error => avisar(error.message)));
+  $('bienvenida-invitado').addEventListener('click', () => {
+    try { localStorage.setItem(CLAVE_BIENVENIDA, 'invitado'); }
+    catch (error) { console.warn('No se pudo recordar la elección:', error); }
+    $('bienvenida').close();
+  });
   $('abrir-config').addEventListener('click', () => $('panel-config').showModal());
   $('cerrar-config').addEventListener('click', () => $('panel-config').close());
   $('nueva-lista').addEventListener('click',async()=>{activa=crearLista();await persistir();mostrarPantalla(true);$('titulo').focus();});
@@ -430,6 +436,15 @@ async function iniciar() {
     categorias=await inicializarCatalogos();catalogos=await obtenerTodos('catalogos');listas=await obtenerTodos('listas');
     activa=listas[0]??crearLista();if(!listas.length)await guardar('listas',activa);
     cargarPreferencias();configurarEventos();renderizar();mostrarPantalla(false);
+    // No se modifican ni migran las listas existentes.
+    // Una instalación anterior con datos ya guardados entra directamente como invitado.
+    let eleccion = null;
+    try { eleccion = localStorage.getItem(CLAVE_BIENVENIDA); } catch (error) { console.warn(error); }
+    if (!eleccion && listas.length) {
+      try { localStorage.setItem(CLAVE_BIENVENIDA, 'invitado'); } catch (error) { console.warn(error); }
+    } else if (!eleccion) {
+      $('bienvenida').showModal();
+    }
     if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(console.warn);
   }catch(error){console.error(error);avisar('Error al iniciar: '+error.message);}
 }
