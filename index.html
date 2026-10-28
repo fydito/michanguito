@@ -17,7 +17,7 @@
   <title>Mi Changuito</title>
 </head>
 <body>
-  <header class="cabecera"><div class="contenedor cabecera-interior"><h1><img class="changui-cabecera" src="./img/changui-favicon-64.png" alt="" width="72" height="72"> Mi Changuito</h1><div class="cabecera-acciones"><span class="etiqueta">Modo local · v0.1.22</span><button id="abrir-config" class="boton-icono" type="button" aria-label="Configuración" title="Configuración">⚙</button></div></div></header>
+  <header class="cabecera"><div class="contenedor cabecera-interior"><h1><img class="changui-cabecera" src="./img/changui-favicon-64.png" alt="" width="72" height="72"> Mi Changuito</h1><div class="cabecera-acciones"><span class="etiqueta">Mi Changuito · v0.1.23</span><button id="abrir-config" class="boton-icono" type="button" aria-label="Configuración" title="Configuración">⚙</button></div></div></header>
   <dialog id="bienvenida" class="dialogo-config bienvenida" aria-labelledby="bienvenida-titulo">
     <div class="bienvenida-interior">
       <img src="./img/changui-192.png" width="100" height="100" alt="Changui">
@@ -94,14 +94,14 @@
     </dialog>
     <section id="pantalla-editor" class="panel principal" aria-label="Editor de lista" hidden>
       <button id="volver-listas" class="boton secundario pequeno" type="button">← Mis listas</button>
-      <div class="fila entre encabezado-lista"><h2>Lista de compras</h2><div class="acciones-lista"><button id="guardar-mlis" class="boton secundario pequeno" type="button">Guardar lista</button><button id="eliminar-lista" class="boton peligro pequeno" type="button">Eliminar lista</button></div></div>
+      <div class="fila entre encabezado-lista"><h2>Lista de compras</h2><div class="acciones-lista"><button id="compartir-lista" class="boton secundario pequeno" type="button">Compartir</button><button id="guardar-mlis" class="boton secundario pequeno" type="button">Guardar lista</button><button id="eliminar-lista" class="boton peligro pequeno" type="button">Eliminar lista</button></div></div>
       <div class="form-grid">
         <label>Título<input id="titulo" type="text" maxlength="100" placeholder="Ej.: Compras del sábado"></label>
-        <label>Visibilidad<select id="visibilidad"><option value="personal">Personal</option><option value="compartida" disabled>Compartida (en preparación)</option></select></label>
+        <label>Visibilidad<select id="visibilidad"><option value="personal">Personal</option><option value="compartida">Compartida</option></select></label>
         <label>Fecha<input id="fecha" type="date"></label>
 
       </div>
-      <p class="ayuda">Las listas compartidas con permisos para otras personas se habilitarán en una próxima etapa.</p>
+      <p class="ayuda">Las listas compartidas se sincronizan automáticamente cuando hay conexión.</p>
       <div class="fila entre subtitulo"><h3>Productos</h3><span id="avance" class="etiqueta">0 de 0 marcados</span></div>
       <div id="productos-lista" class="productos-lista"></div>
       <form id="form-producto" class="form-producto">
@@ -137,6 +137,6 @@
   <!-- Biblioteca oficial de Google Identity Services para el inicio de sesión. -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script type="module" src="./js/tema.js?v=0122"></script>
-  <script type="module" src="./js/app.js?v=0122"></script>
+  <script type="module" src="./js/app.js?v=0123"></script>
 </body>
 </html>
