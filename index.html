@@ -23,7 +23,7 @@
       <img src="./img/changui-192.png" width="100" height="100" alt="Changui">
       <h2 id="bienvenida-titulo">¡Bienvenido a Mi Changuito!</h2>
       <p>Elegí cómo querés empezar.</p>
-      <button id="bienvenida-google" class="boton secundario" type="button" disabled>Continuar con Google (próximamente)</button>
+      <div id="google-bienvenida" class="google-boton" aria-label="Continuar con Google"></div>
       <button id="bienvenida-invitado" class="boton" type="button">Usar como invitado</button>
       <p class="ayuda">Como invitado, tus listas se guardan en este dispositivo. Más adelante podrás vincularlas a tu cuenta.</p>
     </div>
@@ -36,9 +36,15 @@
     </section>
     <dialog id="panel-config" class="dialogo-config" aria-label="Configuración"><div class="fila entre"><h2>Configuración</h2><button id="cerrar-config" class="boton pequeno secundario" type="button">Cerrar ×</button></div>
       <h3>Mi cuenta</h3>
-      <div class="cuenta-local"><strong>Estás usando Mi Changuito como invitado</strong>
-        <p class="ayuda">Tus listas se guardan en este dispositivo. El ingreso con Google y la sincronización estarán disponibles al conectar el servidor.</p>
-        <button type="button" class="boton secundario" disabled>Iniciar sesión con Google (próximamente)</button>
+      <div class="cuenta-local">
+        <strong id="cuenta-estado">Estás usando Mi Changuito como invitado</strong>
+        <p class="ayuda" id="cuenta-ayuda">Tus listas se guardan en este dispositivo.</p>
+        <div id="google-config" class="google-boton"></div>
+        <div class="acciones-verticales" id="cuenta-acciones" hidden>
+          <button id="subir-listas" type="button" class="boton secundario">Guardar mis listas en la nube</button>
+          <button id="bajar-listas" type="button" class="boton secundario">Recuperar listas de la nube</button>
+          <button id="cerrar-sesion" type="button" class="boton secundario">Cerrar sesión</button>
+        </div>
       </div>
       <h3>Apariencia</h3>
       <fieldset class="selector-temas">
@@ -91,11 +97,11 @@
       <div class="fila entre encabezado-lista"><h2>Lista de compras</h2><div class="acciones-lista"><button id="guardar-mlis" class="boton secundario pequeno" type="button">Guardar lista</button><button id="eliminar-lista" class="boton peligro pequeno" type="button">Eliminar lista</button></div></div>
       <div class="form-grid">
         <label>Título<input id="titulo" type="text" maxlength="100" placeholder="Ej.: Compras del sábado"></label>
-        <label>Visibilidad<select id="visibilidad"><option value="personal">Personal</option><option value="compartida" disabled>Compartida (próximamente)</option></select></label>
+        <label>Visibilidad<select id="visibilidad"><option value="personal">Personal</option><option value="compartida" disabled>Compartida (en preparación)</option></select></label>
         <label>Fecha<input id="fecha" type="date"></label>
 
       </div>
-      <p class="ayuda">Las listas compartidas estarán disponibles al incorporar las cuentas y el servidor.</p>
+      <p class="ayuda">Las listas compartidas con permisos para otras personas se habilitarán en una próxima etapa.</p>
       <div class="fila entre subtitulo"><h3>Productos</h3><span id="avance" class="etiqueta">0 de 0 marcados</span></div>
       <div id="productos-lista" class="productos-lista"></div>
       <form id="form-producto" class="form-producto">
