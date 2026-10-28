@@ -7,6 +7,7 @@ import { obtenerTodos, guardar, eliminar } from './storage.js';
 import { inicializarCatalogos, importarCatalogo } from './catalogos.js';
 import { crearLista, validarLista, calcularTotales } from './listas.js';
 import { descargarJSON, leerJSON } from './archivos.js';
+import { iniciarCuenta, cerrarSesion, subirListas, bajarListas } from './cuenta.js';
 
 const $ = id => document.getElementById(id);
 const moneda = numero => new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(numero);
@@ -360,6 +361,30 @@ function configurarEventos() {
     catch (error) { console.warn('No se pudo recordar la elección:', error); }
     $('bienvenida').close();
   });
+  // Sincronización manual: se preserva IndexedDB como fuente local.
+  $('subir-listas').addEventListener('click', async () => {
+    if (!confirm('¿Guardar una copia de tus listas actuales en la nube?')) return;
+    try { const r = await subirListas(await obtenerTodos('listas')); avisar(`${r.guardadas} listas guardadas en la nube.`); }
+    catch (error) { avisar(error.message); }
+  });
+  $('bajar-listas').addEventListener('click', async () => {
+    try {
+      const remotas = await bajarListas();
+      const locales = await obtenerTodos('listas');
+      const ids = new Set(locales.map(l => l.id));
+      const nuevas = remotas.filter(l => !ids.has(l.id));
+      const existentes = remotas.length - nuevas.length;
+      if (!nuevas.length) return avisar('No hay listas nuevas para recuperar.');
+      if (!confirm(`Se incorporarán ${nuevas.length} listas nuevas. ${existentes} ya existen en este dispositivo y no se reemplazarán. ¿Continuar?`)) return;
+      for (const lista of nuevas) await guardar('listas', lista);
+      listas = await obtenerTodos('listas'); renderizar();
+      avisar(`${nuevas.length} listas recuperadas.`);
+    } catch (error) { avisar(error.message); }
+  });
+  $('cerrar-sesion').addEventListener('click', async () => {
+    try { await cerrarSesion(); avisar('Sesión cerrada. Tus listas locales se conservan.'); }
+    catch (error) { avisar(error.message); }
+  });
   $('abrir-config').addEventListener('click', () => $('panel-config').showModal());
   $('cerrar-config').addEventListener('click', () => $('panel-config').close());
   $('nueva-lista').addEventListener('click',async()=>{activa=crearLista();await persistir();mostrarPantalla(true);$('titulo').focus();});
@@ -434,17 +459,19 @@ function configurarEventos() {
 async function iniciar() {
   try {
     categorias=await inicializarCatalogos();catalogos=await obtenerTodos('catalogos');listas=await obtenerTodos('listas');
+    const habiaListas = listas.length > 0;
     activa=listas[0]??crearLista();if(!listas.length)await guardar('listas',activa);
     cargarPreferencias();configurarEventos();renderizar();mostrarPantalla(false);
     // No se modifican ni migran las listas existentes.
     // Una instalación anterior con datos ya guardados entra directamente como invitado.
     let eleccion = null;
     try { eleccion = localStorage.getItem(CLAVE_BIENVENIDA); } catch (error) { console.warn(error); }
-    if (!eleccion && listas.length) {
+    if (!eleccion && habiaListas) {
       try { localStorage.setItem(CLAVE_BIENVENIDA, 'invitado'); } catch (error) { console.warn(error); }
     } else if (!eleccion) {
       $('bienvenida').showModal();
     }
+    await iniciarCuenta(error => avisar(error));
     if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(console.warn);
   }catch(error){console.error(error);avisar('Error al iniciar: '+error.message);}
 }
