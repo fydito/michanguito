@@ -38,6 +38,7 @@ async function autenticar(credential) {
   localStorage.setItem('mi-changuito-bienvenida-v1', 'google');
   if ($('bienvenida').open) $('bienvenida').close();
   actualizarCuenta();
+  window.dispatchEvent(new Event('mc-cuenta-conectada'));
   return respuesta.user;
 }
 

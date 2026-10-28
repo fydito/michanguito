@@ -8,7 +8,8 @@ import { inicializarCatalogos, importarCatalogo } from './catalogos.js';
 import { crearLista, validarLista, calcularTotales } from './listas.js';
 import { descargarJSON, leerJSON } from './archivos.js';
 import { iniciarCuenta, cerrarSesion, subirListas, bajarListas } from './cuenta.js';
-import { iniciarColaboracion, compartirLista, aceptarInvitacion, registrarCambios, actualizarColaboracion } from './colaboracion.js';
+import { iniciarColaboracion, compartirLista, registrarCambios, actualizarColaboracion } from './colaboracion.js';
+import { iniciarInvitaciones, mostrarCompartir } from './invitaciones.js';
 
 const $ = id => document.getElementById(id);
 const moneda = numero => new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(numero);
@@ -338,8 +339,10 @@ async function importarListas(datos) {
 /** Asocia los eventos de edición, importación y exportación. */
 function configurarEventos() {
   $('compartir-lista').addEventListener('click',async()=>{
-    if(!activa)return;try{const enlace=await compartirLista(activa);listas=await obtenerTodos('listas');activa=listas.find(l=>l.id===activa.id);renderizar();
-      try{await navigator.clipboard.writeText(enlace);avisar('Invitación copiada. Compartila con quien quieras.');}catch{prompt('Copiá este enlace de invitación:',enlace);}
+    if(!activa)return;
+    try{
+      if(!activa.colabId){await compartirLista(activa);listas=await obtenerTodos('listas');activa=listas.find(l=>l.id===activa.id);renderizar();}
+      await mostrarCompartir();
     }catch(error){avisar(error.message);}
   });
   $('confirmar-borrado').addEventListener('change', evento => {
@@ -482,13 +485,9 @@ async function iniciar() {
     }
     iniciarColaboracion(avisar,async()=>{const id=activa?.id;listas=await obtenerTodos('listas');activa=listas.find(l=>l.id===id)||listas[0];renderizar();});
     await iniciarCuenta(error => avisar(error));
-    const procesarInvitacion=async()=>{if(new URLSearchParams(location.search).has('invitacion')){
-      const token=new URLSearchParams(location.search).get('invitacion');
-      if(!conectado())avisar('Iniciá sesión con Google para aceptar la invitación.');
-      else try{const nueva=await aceptarInvitacion(token);listas=await obtenerTodos('listas');activa=nueva;renderizar();mostrarPantalla(true);history.replaceState({},'',location.pathname);avisar('Lista compartida incorporada.');}catch(e){avisar(e.message);}
-    }};
-    window.addEventListener('mc-cuenta-conectada',procesarInvitacion);
-    await procesarInvitacion();
+    iniciarInvitaciones(()=>activa,avisar,async()=>{
+      await actualizarColaboracion();listas=await obtenerTodos('listas');renderizar();
+    });
     actualizarColaboracion().catch(console.warn);
     if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(console.warn);
   }catch(error){console.error(error);avisar('Error al iniciar: '+error.message);}
