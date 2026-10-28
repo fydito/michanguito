@@ -8,6 +8,7 @@ import { inicializarCatalogos, importarCatalogo } from './catalogos.js';
 import { crearLista, validarLista, calcularTotales } from './listas.js';
 import { descargarJSON, leerJSON } from './archivos.js';
 import { iniciarCuenta, cerrarSesion, subirListas, bajarListas } from './cuenta.js';
+import { iniciarColaboracion, compartirLista, aceptarInvitacion, registrarCambios, actualizarColaboracion } from './colaboracion.js';
 
 const $ = id => document.getElementById(id);
 const moneda = numero => new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(numero);
@@ -52,8 +53,9 @@ async function borrarItem(idLista, idItem) {
   if (indice < 0) return;
   cerrarDeshacer();
   const [item] = lista.items.splice(indice, 1);
-  ultimoBorrado = preferencias.permitirDeshacer ? { idLista, item, indice } : null;
+  ultimoBorrado = preferencias.permitirDeshacer && !lista.colabId ? { idLista, item, indice } : null;
   await guardar('listas', lista);
+  registrarCambios(lista);
   listas = await obtenerTodos('listas');
   if (activa?.id === idLista) activa = listas.find(elemento => elemento.id === idLista);
   renderizar();
@@ -86,6 +88,7 @@ async function deshacerBorrado() {
   if (!lista || lista.items.some(elemento => elemento.id === item.id)) return;
   lista.items.splice(Math.min(indice, lista.items.length), 0, item);
   await guardar('listas', lista);
+  registrarCambios(lista);
   listas = await obtenerTodos('listas');
   if (activa?.id === idLista) activa = listas.find(elemento => elemento.id === idLista);
   renderizar();
@@ -118,6 +121,7 @@ function nodo(etiqueta, texto, clase = '') {
 async function persistir() {
   if (!activa) return;
   await guardar('listas', activa);
+  registrarCambios(activa);
   listas = await obtenerTodos('listas');
   renderizar();
 }
@@ -321,7 +325,7 @@ function renderizar() {
   renderizarNavegacion();
   if (!activa) return;
   $('titulo').value=activa.titulo;$('fecha').value=activa.fecha;
-  $('visibilidad').value='personal';
+  $('visibilidad').value=activa.colabId?'compartida':'personal';
   renderizarCategorias();renderizarCatalogo();renderizarItems();
 }
 /** Importa varias listas como copias nuevas para no pisar compras existentes. */
@@ -333,6 +337,11 @@ async function importarListas(datos) {
 }
 /** Asocia los eventos de edición, importación y exportación. */
 function configurarEventos() {
+  $('compartir-lista').addEventListener('click',async()=>{
+    if(!activa)return;try{const enlace=await compartirLista(activa);listas=await obtenerTodos('listas');activa=listas.find(l=>l.id===activa.id);renderizar();
+      try{await navigator.clipboard.writeText(enlace);avisar('Invitación copiada. Compartila con quien quieras.');}catch{prompt('Copiá este enlace de invitación:',enlace);}
+    }catch(error){avisar(error.message);}
+  });
   $('confirmar-borrado').addEventListener('change', evento => {
     preferencias.confirmarBorrado = evento.target.checked;
     guardarPreferencias();
@@ -416,11 +425,11 @@ function configurarEventos() {
   });
 
   $('eliminar-lista').addEventListener('click',async()=>{
-    if(!activa||!confirm(`¿Eliminar la lista «${activa.titulo}»?`))return;
+    if(!activa)return;if(activa.colabId){avisar('No se puede eliminar una lista compartida desde este dispositivo.');return;}if(!confirm(`¿Eliminar la lista «${activa.titulo}»?`))return;
     await eliminar('listas',activa.id);listas=await obtenerTodos('listas');activa=listas[0]??crearLista();await persistir();mostrarPantalla(false);
   });
-  $('titulo').addEventListener('change',async e=>{activa.titulo=e.target.value.trim()||'Nueva lista';await persistir();});
-  $('fecha').addEventListener('change',async e=>{if(e.target.value){activa.fecha=e.target.value;await persistir();}});
+  $('titulo').addEventListener('change',async e=>{if(activa.colabId){avisar('El título de una lista compartida no se puede modificar todavía.');renderizar();return;}activa.titulo=e.target.value.trim()||'Nueva lista';await persistir();});
+  $('fecha').addEventListener('change',async e=>{if(activa.colabId){avisar('La fecha de una lista compartida no se puede modificar todavía.');renderizar();return;}if(e.target.value){activa.fecha=e.target.value;await persistir();}});
   $('categoria').addEventListener('change', renderizarCatalogo);
   $('alternar-productos').addEventListener('click', () => desplegarProductos($('panel-productos').hidden));
   $('incluir-otro').addEventListener('change', () => {
@@ -471,7 +480,16 @@ async function iniciar() {
     } else if (!eleccion) {
       $('bienvenida').showModal();
     }
+    iniciarColaboracion(avisar,async()=>{const id=activa?.id;listas=await obtenerTodos('listas');activa=listas.find(l=>l.id===id)||listas[0];renderizar();});
     await iniciarCuenta(error => avisar(error));
+    const procesarInvitacion=async()=>{if(new URLSearchParams(location.search).has('invitacion')){
+      const token=new URLSearchParams(location.search).get('invitacion');
+      if(!conectado())avisar('Iniciá sesión con Google para aceptar la invitación.');
+      else try{const nueva=await aceptarInvitacion(token);listas=await obtenerTodos('listas');activa=nueva;renderizar();mostrarPantalla(true);history.replaceState({},'',location.pathname);avisar('Lista compartida incorporada.');}catch(e){avisar(e.message);}
+    }};
+    window.addEventListener('mc-cuenta-conectada',procesarInvitacion);
+    await procesarInvitacion();
+    actualizarColaboracion().catch(console.warn);
     if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(console.warn);
   }catch(error){console.error(error);avisar('Error al iniciar: '+error.message);}
 }

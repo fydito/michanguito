@@ -95,3 +95,6 @@ export async function bajarListas() {
   if (!conectado()) throw new Error('Iniciá sesión primero.');
   return (await solicitar('sync.php')).listas;
 }
+
+/** API autenticada para módulos adicionales, sin exponer la sesión. */
+export function solicitarCuenta(ruta,metodo='GET',datos=undefined){return solicitar(ruta,metodo,datos);}
