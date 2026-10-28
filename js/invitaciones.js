@@ -5,6 +5,7 @@ const api=(accion,datos)=>solicitarCuenta('contactos.php?accion='+accion,datos==
 let listaActiva=()=>null,avisar=()=>{},alAceptar=()=>{};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let timer=null;
+let avisadas = new Set();
 async function cargarUsuarios(){
  const q=$('buscar-usuario').value.trim();const r=await api('usuarios&q='+encodeURIComponent(q));
  const frecuentes=new Set(r.frecuentes.map(x=>Number(x.id)));
@@ -13,10 +14,12 @@ async function cargarUsuarios(){
  $('usuarios-registrados').innerHTML=render(r.usuarios.filter(u=>!frecuentes.has(Number(u.id))));
 }
 async function cargarPendientes(){
- if(!conectado()){$('notificaciones').hidden=true;return;}
+ if(!conectado()){$('abrir-invitaciones').hidden=true;return;}
  const r=await api('pendientes');const items=r.invitaciones;
- $('notificaciones').hidden=false;$('contador-invitaciones').textContent=items.length?String(items.length):'';
+ $('abrir-invitaciones').hidden=false;$('contador-invitaciones').textContent=items.length?String(items.length):'';
  $('invitaciones-pendientes').innerHTML=items.map(i=>`<div class="contacto-fila"><span><strong>${esc(i.remitente)}</strong> compartió <strong>${esc(i.lista_nombre)}</strong><small>Permiso: ${i.permiso==='editar'?'Edición completa':'Solo compras'}</small></span><span class="invitacion-acciones"><button class="boton pequeno" data-respuesta="aceptar" data-id="${Number(i.id)}">Aceptar</button><button class="boton pequeno secundario" data-respuesta="rechazar" data-id="${Number(i.id)}">Rechazar</button></span></div>`).join('')||'<p class="ayuda">No tenés invitaciones pendientes.</p>';
+ const nuevas=items.filter(i=>!avisadas.has(Number(i.id)));
+ if(nuevas.length){nuevas.forEach(i=>avisadas.add(Number(i.id)));if(!$('dialogo-invitaciones').open && !$('panel-config').open && !$('dialogo-compartir').open) $('dialogo-invitaciones').showModal();}
 }
 export function iniciarInvitaciones(obtenerLista,onAviso,onAceptar){
  listaActiva=obtenerLista;avisar=onAviso;alAceptar=onAceptar;
