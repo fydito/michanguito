@@ -44,6 +44,7 @@ async function autenticar(credential) {
 /** Carga el botón oficial de Google sin recrear el flujo de OAuth manualmente. */
 function prepararBotones(onError) {
   let intentos = 0;
+  // La biblioteca de Google se carga externamente; esperamos hasta 10 segundos.
   const esperar = () => {
     if (!window.google?.accounts?.id) {
       if (++intentos < 40) return setTimeout(esperar, 250);
