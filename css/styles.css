@@ -592,3 +592,6 @@ input::placeholder { color:var(--texto-secundario);opacity:.88;font-weight:450; 
 /* Integración de cuentas: el botón oficial de Google se adapta al ancho disponible. */
 .google-boton { min-height: 44px; max-width: 350px; margin: 12px auto; display: flex; justify-content: center; }
 .google-boton > div { max-width: 100%; }
+
+/* Invitaciones internas: contactos frecuentes y usuarios registrados. */
+.contactos{display:grid;gap:.5rem;max-height:34vh;overflow:auto}.contacto-fila{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.7rem;border:1px solid var(--borde,#ccc);border-radius:.6rem}.contacto-fila span:first-child{min-width:0;overflow-wrap:anywhere}.contacto-fila small{display:block;opacity:.75}.invitacion-acciones{display:flex;gap:.35rem;flex-wrap:wrap}#contador-invitaciones:not(:empty){font-size:.7em;font-weight:700;color:var(--color-principal,#147d66)}
